@@ -10,8 +10,13 @@ import { useReveal } from "../hooks/useReveal.js";
 
 function ProjectsPage() {
   useDocumentTitle("Projects");
+<<<<<<< HEAD
   const [projects, setProjects] = useState(fallbackProjects);
   const [loading, setLoading] = useState(false);
+=======
+  const [projects, setProjects] = useState([]);
+  const [loading, setLoading] = useState(true);
+>>>>>>> a25a1cba4104bfe9a2fe971ee30681bf754a9c62
   const [apiError, setApiError] = useState(false);
   const ref = useReveal();
 
