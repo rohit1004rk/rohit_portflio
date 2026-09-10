@@ -48,7 +48,7 @@ function ProjectsPage() {
             <>
               <div className="projects-grid">
                 {shown.map((p) => (
-                  <article className="card reveal" key={p._id || p.slug}>
+                  <article className="card" key={p._id || p.slug}>
                     <div className="card-top">
                       <span className="card-icon">{p.icon || "💻"}</span>
                       <StatusBadge status={p.status} />
