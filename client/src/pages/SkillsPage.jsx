@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react';
-import PageHero from '../components/ui/PageHero.jsx';
-import { fetchSkills } from '../api/api.js';
-import { fallbackSkills } from '../data/portfolioData.js';
-import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
-import { useReveal } from '../hooks/useReveal.js';
+import { useEffect, useState } from "react";
+import PageHero from "../components/ui/PageHero.jsx";
+import { fetchSkills } from "../api/api.js";
+import { fallbackSkills } from "../data/portfolioData.js";
+import { useDocumentTitle } from "../hooks/useDocumentTitle.js";
+import { useReveal } from "../hooks/useReveal.js";
 
 function SkillsPage() {
-  useDocumentTitle('Skills');
-  const [skills, setSkills] = useState([]);
-  const [loading, setLoading] = useState(true);
+  useDocumentTitle("Skills");
+  const [skills, setSkills] = useState(fallbackSkills);
+  const [loading, setLoading] = useState(false);
   const ref = useReveal();
 
   useEffect(() => {
@@ -37,9 +37,9 @@ function SkillsPage() {
           ) : (
             <div className="skills-grid">
               {groups.map((g) => (
-                <div className="skill-card reveal" key={g.category}>
+                <div className="skill-card" key={g.category}>
                   <h3>
-                    <span className="ic">{g.icon || '🛠️'}</span>
+                    <span className="ic">{g.icon || "🛠️"}</span>
                     {g.category}
                   </h3>
                   <div className="skill-chips">
