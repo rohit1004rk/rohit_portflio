@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
-import StatusBadge from '../components/ui/StatusBadge.jsx';
-import TechTags from '../components/ui/TechTags.jsx';
-import { fetchProjectBySlug } from '../api/api.js';
-import { fallbackProjects } from '../data/projectsData.js';
-import { useDocumentTitle } from '../hooks/useDocumentTitle.js';
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import StatusBadge from "../components/ui/StatusBadge.jsx";
+import TechTags from "../components/ui/TechTags.jsx";
+import { fetchProjectBySlug } from "../api/api.js";
+import { fallbackProjects } from "../data/projectsData.js";
+import { useDocumentTitle } from "../hooks/useDocumentTitle.js";
 
 function ProjectDetailPage() {
   const { slug } = useParams();
@@ -12,7 +12,7 @@ function ProjectDetailPage() {
   const [loading, setLoading] = useState(true);
   const [notFound, setNotFound] = useState(false);
 
-  useDocumentTitle(project ? project.title : 'Project');
+  useDocumentTitle(project ? project.title : "Project");
 
   useEffect(() => {
     setLoading(true);
@@ -45,7 +45,9 @@ function ProjectDetailPage() {
         <div className="code">404</div>
         <h1>Project not found</h1>
         <p>The project you're looking for doesn't exist.</p>
-        <Link to="/projects" className="btn btn-primary">Back to Projects</Link>
+        <Link to="/projects" className="btn btn-primary">
+          Back to Projects
+        </Link>
       </div>
     );
   }
@@ -54,13 +56,30 @@ function ProjectDetailPage() {
     <>
       <div className="page-hero">
         <div className="container">
-          <Link to="/projects" className="eyebrow" style={{ textDecoration: 'none' }}>
+          <Link
+            to="/projects"
+            className="eyebrow"
+            style={{ textDecoration: "none" }}
+          >
             ← All Projects
           </Link>
           <h1>{project.title}</h1>
-          <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--space-4)', marginTop: 'var(--space-4)', flexWrap: 'wrap' }}>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              gap: "var(--space-4)",
+              marginTop: "var(--space-4)",
+              flexWrap: "wrap",
+            }}
+          >
             <StatusBadge status={project.status} />
-            <span className="mono" style={{ color: 'var(--text-3)', fontSize: 'var(--text-sm)' }}>{project.category}</span>
+            <span
+              className="mono"
+              style={{ color: "var(--text-3)", fontSize: "var(--text-sm)" }}
+            >
+              {project.category}
+            </span>
           </div>
         </div>
       </div>
@@ -132,7 +151,9 @@ function ProjectDetailPage() {
             <h4>Project Details</h4>
             <div className="row">
               <span className="k">Status</span>
-              <span className="v"><StatusBadge status={project.status} /></span>
+              <span className="v">
+                <StatusBadge status={project.status} />
+              </span>
             </div>
             <div className="row">
               <span className="k">Category</span>
@@ -140,15 +161,48 @@ function ProjectDetailPage() {
             </div>
             <div className="row">
               <span className="k">Icon</span>
-              <span className="v" style={{ fontSize: 'var(--text-xl)' }}>{project.icon || '💻'}</span>
+              <span className="v" style={{ fontSize: "var(--text-xl)" }}>
+                {project.icon || "💻"}
+              </span>
             </div>
-            <div style={{ marginTop: 'var(--space-5)' }}>
+            <div style={{ marginTop: "var(--space-5)" }}>
               <h4>Technologies</h4>
               <TechTags items={project.tech || []} />
             </div>
-            <div style={{ marginTop: 'var(--space-6)', display: 'flex', flexDirection: 'column', gap: 'var(--space-3)' }}>
-              <Link to="/contact" className="btn btn-primary">Discuss this project</Link>
-              <Link to="/projects" className="btn btn-ghost">← All Projects</Link>
+            <div
+              style={{
+                marginTop: "var(--space-6)",
+                display: "flex",
+                flexDirection: "column",
+                gap: "var(--space-3)",
+              }}
+            >
+              {project.repoUrl && (
+                <a
+                  href={project.repoUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost"
+                >
+                  View on GitHub
+                </a>
+              )}
+              {project.liveUrl && (
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn btn-ghost"
+                >
+                  Live Demo
+                </a>
+              )}
+              <Link to="/contact" className="btn btn-primary">
+                Discuss this project
+              </Link>
+              <Link to="/projects" className="btn btn-ghost">
+                ← All Projects
+              </Link>
             </div>
           </aside>
         </div>

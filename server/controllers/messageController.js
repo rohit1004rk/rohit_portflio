@@ -1,5 +1,5 @@
 import Message from '../models/Message.js';
-import nodemailer from 'nodemailer';
+import { sendContactNotification } from '../services/mailService.js';
 
 // @desc    Submit a contact message
 // @route   POST /api/messages
@@ -13,30 +13,14 @@ export const createMessage = async (req, res) => {
 
     const newMessage = await Message.create({ name, email, subject, message });
 
-    // Optional email notification via Nodemailer (only if SMTP is configured)
-    if (process.env.SMTP_USER && process.env.MAIL_TO) {
-      try {
-        const transporter = nodemailer.createTransport({
-          host: process.env.SMTP_HOST || 'smtp.gmail.com',
-          port: Number(process.env.SMTP_PORT) || 587,
-          secure: false,
-          auth: { user: process.env.SMTP_USER, pass: process.env.SMTP_PASS },
-        });
-        await transporter.sendMail({
-          from: `"Portfolio Contact" <${process.env.SMTP_USER}>`,
-          to: process.env.MAIL_TO,
-          replyTo: email,
-          subject: `Portfolio message: ${subject}`,
-          text: `Name: ${name}\nEmail: ${email}\n\n${message}`,
-          html: `<h3>New portfolio message</h3><p><b>Name:</b> ${name}</p><p><b>Email:</b> ${email}</p><p><b>Subject:</b> ${subject}</p><p><b>Message:</b><br/>${message.replace(/\n/g, '<br/>')}</p>`,
-        });
-      } catch (mailErr) {
-        console.warn('Email notification failed:', mailErr.message);
-      }
-    }
+    // Notify the owner by email when SMTP is configured (never blocks the
+    // response: the message is already stored in MongoDB).
+    const notified = await sendContactNotification(newMessage);
 
     res.status(201).json({
       success: true,
+      id: newMessage._id,
+      emailed: notified,
       message: 'Message sent successfully. I will get back to you soon!',
     });
   } catch (error) {

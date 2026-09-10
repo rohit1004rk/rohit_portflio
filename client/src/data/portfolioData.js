@@ -118,3 +118,57 @@ export const terminalLines = [
   { type: 'ok', text: 'NLP: READY' },
   { type: 'ok', text: 'COMPUTER VISION: READY' },
 ];
+
+export const resumeProjects = [
+  {
+    "name": "FaceID Attendance System",
+    "tech": "Python, OpenCV, FaceNet, FastAPI, PostgreSQL, React",
+    "bullets": [
+      "Problem & Feature: Built an automated, contactless biometric attendance pipeline capable of detecting and verifying student/employee faces from live video streams in under 500 ms.",
+      "Technical Implementation: Integrated OpenCV for Haar-cascade face bounding and FaceNet for generating 128-dimensional vector embeddings, matched against an indexed PostgreSQL database using cosine similarity.",
+      "Anti-Spoofing & Security: Implemented blink and micro-motion detection heuristics to prevent static smartphone/paper photo spoofing, maintaining 98%+ verification accuracy.",
+      "Deployment & Dashboard: Developed an administrative reporting dashboard in React with automated daily CSV attendance export and deployed the FastAPI backend on AWS EC2."
+    ]
+  },
+  {
+    "name": "ResuMatch AI",
+    "tech": "Next.js, TypeScript, Tailwind CSS, Prisma, PostgreSQL, OpenAI API",
+    "bullets": [
+      "Problem & Feature: Built a full-stack generative resume platform that scans target job descriptions and optimizes resume structure, improving ATS match rates by ~45%.",
+      "Technical Implementation: Integrated LLM endpoints with structured JSON prompts to parse job keywords, calculate relevance scores, and suggest inline bullet-point enhancements.",
+      "Performance & Rendering: Built an in-browser drag-and-drop resume editor utilizing pdf-lib for client-side dynamic compilation, rendering downloadable PDFs in under 1 second without server re-renders.",
+      "Architecture & Deployment: Deployed on Vercel with a PostgreSQL database managed via Prisma ORM, implementing secure guest session saving."
+    ]
+  },
+  {
+    "name": "AgroSense Solar IoT",
+    "tech": "ESP32, C++, MQTT Protocol, Node.js, InfluxDB, React, Chart.js",
+    "bullets": [
+      "Problem & Feature: Designed an off-grid precision agriculture unit that automates irrigation based on live soil telemetry, cutting simulated water consumption by ~35%.",
+      "Hardware & Firmware: Programmed an ESP32 microcontroller in C++ to sample capacitive soil moisture, temperature, and solar battery health, executing low-power deep-sleep cycles.",
+      "Telemetry & Networking: Engineered an MQTT messaging pipeline publishing telemetry data at 30-second intervals to a Node.js broker with fallback local relay control.",
+      "Web Monitoring: Created a real-time web portal visualizing soil saturation graphs, moisture thresholds, and pump actuation history using React and Chart.js."
+    ]
+  },
+  {
+    "name": "PulseCheck API Monitor",
+    "tech": "Node.js, Express, Redis, BullMQ, PostgreSQL, Next.js, Resend API",
+    "bullets": [
+      "Problem & Feature: Built a distributed background service that monitors uptime, response latencies, and SSL certificates for multiple public/private endpoints.",
+      "Worker Queue Engine: Built an asynchronous cron scheduler using Redis and BullMQ to execute non-blocking HTTP health checks at configurable intervals (1m, 5m, 15m).",
+      "Database & Data Modeling: Designed an indexed PostgreSQL schema tracking latency history, response payloads, and consecutive failure counts across 30-day windows.",
+      "Incident Alerting: Integrated transactional email webhooks via the Resend API to trigger down-alerts within 60 seconds of detected server failures."
+    ]
+  },
+  {
+    "name": "CodeFixer AI",
+    "tech": "Next.js, TypeScript, Monaco Editor, FastAPI, LangChain, Redis, Tailwind CSS",
+    "bullets": [
+      "Problem & Feature: Engineered an in-browser code analysis environment that statically analyzes code, identifies runtime/logical flaws, and recommends optimized refactors.",
+      "Editor & LLM Integration: Embedded Monaco Editor (VS Code core) connected to an asynchronous LangChain pipeline analyzing time complexity, space complexity, and CWE security vulnerabilities.",
+      "Diff Engine & Streaming: Built a side-by-side diff viewer utilizing WebStreams to stream optimized code suggestions with unified inline additions and deletions.",
+      "Latency Optimization: Implemented Redis hashing for code snippets, serving instant cached reviews for repeated logic and reducing LLM inference costs by ~60%."
+    ]
+  }
+];
+

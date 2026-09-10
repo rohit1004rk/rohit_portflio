@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
-import { profile } from '../../data/portfolioData.js';
-import NetworkCanvas from './NetworkCanvas.jsx';
-import TerminalVisual from './TerminalVisual.jsx';
+import { Link } from "react-router-dom";
+import { profile } from "../../data/portfolioData.js";
+import NetworkCanvas from "./NetworkCanvas.jsx";
+import TerminalVisual from "./TerminalVisual.jsx";
 
 function Hero() {
   return (
@@ -24,11 +24,16 @@ function Hero() {
               <Link to="/projects" className="btn btn-ghost">
                 View Projects
               </Link>
-              <Link to="/resume" className="btn btn-ghost">
-                View Resume
-              </Link>
               <a
-                href="https://www.linkedin.com/"
+                href="/rohit-kumar-resume.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="btn btn-ghost"
+              >
+                View Resume
+              </a>
+              <a
+                href="https://www.linkedin.com/in/rohit1004rk"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn btn-ghost"

@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img">
+<defs>
+<linearGradient id="bg6" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b0f14"/><stop offset="1" stop-color="#111820"/>
+</linearGradient>
+<pattern id="grid6" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0v32" fill="none" stroke="#273342" stroke-width="1" opacity="0.45"/>
+</pattern>
+</defs>
+<rect width="640" height="360" fill="url(#bg6)"/>
+<rect width="640" height="360" fill="url(#grid6)"/>
+<circle cx="565" cy="-30" r="150" fill="#ffb454" opacity="0.07"/>
+<circle cx="60" cy="390" r="150" fill="#4fd8c4" opacity="0.06"/>
+<text x="36" y="48" font-family="JetBrains Mono, Menlo, monospace" font-size="13" letter-spacing="2" fill="#4fd8c4">AI/ML · COMPUTER VISION</text>
+<text x="36" y="80" font-family="Space Grotesk, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#f1f5f9">FaceID Pro</text>
+<rect x="36" y="118" width="320" height="198" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><circle cx="196" cy="196" r="46" fill="#64748b" opacity="0.28"/><rect x="128" y="140" width="136" height="150" rx="6" fill="none" stroke="#4fd8c4" stroke-width="2" stroke-dasharray="10 8"/><path d="M128 140h-14v-14M264 140h14v-14M128 290h-14v14M264 290h14v14" stroke="#4fd8c4" stroke-width="3" fill="none"/><path d="M170 254q26 18 52 0" fill="none" stroke="#ffb454" stroke-width="3"/><text x="140" y="306" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#4fd8c4">LIVE STREAM</text><rect x="380" y="118" width="224" height="198" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><circle cx="412" cy="156" r="9" fill="#4fd8c4"/><text x="430" y="161" font-family="JetBrains Mono, Menlo, monospace" font-size="13" fill="#4fd8c4">VERIFIED</text><rect x="404" y="186" width="160" height="9" rx="3" fill="#f1f5f9" opacity="0.7"/><rect x="404" y="206" width="120" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="404" y="236" width="160" height="34" rx="8" fill="#ffb454" opacity="0.13" stroke="#ffb454"/><text x="418" y="258" font-family="JetBrains Mono, Menlo, monospace" font-size="13" fill="#ffb454">&lt; 500 ms</text><text x="404" y="294" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#64748b">ANTI-SPOOF: ON</text></svg>

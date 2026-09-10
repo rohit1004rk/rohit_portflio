@@ -7,6 +7,8 @@ const projectSchema = new mongoose.Schema(
     category: { type: String, default: 'AI/ML' },
     icon: { type: String, default: '💻' },
     overview: { type: String, required: true },
+    thumbnail: { type: String, default: '' },
+    description: [String],
     problem: { type: String, required: true },
     whatIBuilt: { type: String, required: true },
     result: { type: String, required: true },
@@ -20,6 +22,9 @@ const projectSchema = new mongoose.Schema(
       },
     ],
     tech: [{ type: String }],
+    // Optional real links. A button only renders when a URL exists.
+    repoUrl: { type: String, default: '', trim: true },
+    liveUrl: { type: String, default: '', trim: true },
     status: {
       type: String,
       enum: ['completed', 'in-progress', 'prototype', 'learning'],

@@ -1,11 +1,11 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
-import { fetchProjects } from '../../api/api.js';
-import { fallbackProjects } from '../../data/projectsData.js';
-import SectionHeading from '../ui/SectionHeading.jsx';
-import StatusBadge from '../ui/StatusBadge.jsx';
-import TechTags from '../ui/TechTags.jsx';
-import { useReveal } from '../../hooks/useReveal.js';
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { fetchProjects } from "../../api/api.js";
+import { fallbackProjects } from "../../data/projectsData.js";
+import SectionHeading from "../ui/SectionHeading.jsx";
+import StatusBadge from "../ui/StatusBadge.jsx";
+import TechTags from "../ui/TechTags.jsx";
+import { useReveal } from "../../hooks/useReveal.js";
 
 function FeaturedProjects() {
   const [projects, setProjects] = useState([]);
@@ -19,8 +19,12 @@ function FeaturedProjects() {
       .finally(() => setLoading(false));
   }, []);
 
-  const featured = (projects.length ? projects : fallbackProjects).filter((p) => p.featured);
-  const shown = featured.length ? featured : (projects.length ? projects : fallbackProjects).slice(0, 3);
+  const featured = (projects.length ? projects : fallbackProjects).filter(
+    (p) => p.featured,
+  );
+  const shown = featured.length
+    ? featured
+    : (projects.length ? projects : fallbackProjects).slice(0, 3);
 
   return (
     <section className="section" ref={ref}>
@@ -42,19 +46,30 @@ function FeaturedProjects() {
             {shown.map((p) => (
               <article className="card reveal" key={p._id || p.slug}>
                 <div className="card-top">
-                  <span className="card-icon">{p.icon || '💻'}</span>
+                  <span className="card-icon">{p.icon || "💻"}</span>
                   <StatusBadge status={p.status} />
                 </div>
+                {p.thumbnail && (
+                  <img
+                    className="card-thumb"
+                    src={p.thumbnail}
+                    alt={`${p.title} project thumbnail`}
+                    loading="lazy"
+                  />
+                )}
                 <div className="card-cat">{p.category}</div>
                 <h3>{p.title}</h3>
                 <p>{p.overview}</p>
-                <div className="tech-tags" style={{ marginTop: 'var(--space-4)' }}>
+                <div
+                  className="tech-tags"
+                  style={{ marginTop: "var(--space-4)" }}
+                >
                   <TechTags items={(p.tech || []).slice(0, 5)} />
                 </div>
                 <Link
                   to={`/projects/${p.slug}`}
                   className="btn btn-ghost btn-sm"
-                  style={{ marginTop: 'var(--space-5)' }}
+                  style={{ marginTop: "var(--space-5)" }}
                 >
                   View Details →
                 </Link>
@@ -62,7 +77,10 @@ function FeaturedProjects() {
             ))}
           </div>
         )}
-        <div style={{ marginTop: 'var(--space-10)', textAlign: 'center' }} className="reveal">
+        <div
+          style={{ marginTop: "var(--space-10)", textAlign: "center" }}
+          className="reveal"
+        >
           <Link to="/projects" className="btn btn-primary">
             View All Projects
           </Link>

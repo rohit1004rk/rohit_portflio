@@ -1949,3 +1949,293 @@ button {
   font-family: var(--font-mono);
   color: var(--accent);
 }
+
+/* ═══════════════════════════════════════════════════════
+   RESPONSIVE OVERFLOW FIX  (layout only - no visual/theme change on desktop)
+   ═══════════════════════════════════════════════════════ */
+
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* Grid/flex children default to min-width:auto, which is what pushes long
+   words, code lines and badges outside the viewport on small screens. */
+*,
+*::before,
+*::after {
+  min-width: 0;
+}
+
+img,
+svg,
+canvas,
+video,
+iframe,
+pre {
+  max-width: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+p,
+li,
+a,
+span,
+strong,
+label,
+td,
+th {
+  overflow-wrap: break-word;
+}
+
+.container,
+.hero-visual,
+.terminal,
+.card,
+.skill-card,
+.focus-card,
+.timeline-card,
+.resume-block,
+.side-card,
+.detail-main,
+.admin-card,
+.admin-panel {
+  max-width: 100%;
+}
+
+.term-line {
+  overflow-wrap: anywhere;
+}
+
+.admin-table {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.hero-ctas,
+.tech-tags,
+.skill-chips,
+.footer-inner,
+.card .card-top {
+  flex-wrap: wrap;
+}
+
+.form input,
+.form textarea {
+  max-width: 100%;
+}
+
+@media (max-width: 1024px) {
+  .metrics-grid {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .nav-links {
+    max-height: calc(100vh - var(--nav-height));
+    overflow-y: auto;
+  }
+
+  .btn {
+    white-space: normal;
+  }
+
+  .timeline-card .yr,
+  .badge {
+    white-space: normal;
+  }
+
+  .detail-main ul li {
+    overflow-wrap: break-word;
+  }
+
+  .side-card .row {
+    flex-wrap: wrap;
+    gap: var(--space-1);
+  }
+
+  .chat-widget {
+    right: 16px;
+    bottom: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --container-pad: 16px;
+  }
+
+  .metrics-grid,
+  .admin-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .brand small {
+    display: none;
+  }
+
+  .hero-ctas .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .footer-inner {
+    gap: var(--space-2);
+  }
+}
+
+/* ═════════════════════════════════════════════════════
+   PROJECT CARD: THUMBNAIL, DESCRIPTION, FEATURE BULLETS
+   (additive only — existing card styles unchanged)
+   ═════════════════════════════════════════════════════ */
+
+.card .card-thumb {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
+  margin-bottom: var(--space-5);
+}
+
+.card .card-desc p {
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+}
+
+.card .card-desc p + p {
+  margin-top: var(--space-1);
+}
+
+.card .card-label {
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-3);
+  margin-top: var(--space-5);
+  margin-bottom: var(--space-2);
+}
+
+.card .card-features {
+  list-style: none;
+  display: grid;
+  gap: var(--space-2);
+}
+
+.card .card-features li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: var(--leading-relaxed);
+  overflow-wrap: break-word;
+}
+
+.card .card-features li::before {
+  content: '▸';
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Resume page: project bullet list (added with the resume Projects block) */
+.resume-block .entry .resume-bullets {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-2);
+}
+.resume-block .entry .resume-bullets li {
+  position: relative;
+  padding-left: 18px;
+  color: var(--text-2);
+  font-size: var(--text-sm);
+  line-height: 1.7;
+}
+.resume-block .entry .resume-bullets li::before {
+  content: "▸";
+  position: absolute;
+  left: 0;
+  color: var(--accent);
+}
+
+/* Resume page action buttons (View / Download) */
+.resume-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+
+/* Inline field-level validation message on forms */
+.form .field-error {
+  display: block;
+  margin-top: var(--space-2);
+  color: var(--error);
+  font-size: var(--text-sm);
+}
+.form input[aria-invalid='true'],
+.form textarea[aria-invalid='true'] {
+  border-color: var(--error);
+}
+
+/* Footer social links */
+.footer-social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+.footer-social a {
+  color: var(--text-2);
+  text-decoration: none;
+  font-size: var(--text-sm);
+}
+.footer-social a:hover {
+  color: var(--accent);
+}
+
+/* Project card action row (View Details / GitHub / Live Demo) */
+.card-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+/* Keep focus clearly visible for keyboard users on links and inputs */
+a:focus-visible,
+button:focus-visible,
+.form input:focus-visible,
+.form textarea:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: var(--radius-sm, 6px);
+}
+
+/* Comfortable touch targets on phones and tablets */
+@media (max-width: 900px) {
+  .btn,
+  .nav-links a,
+  .footer-social a,
+  .theme-toggle,
+  .burger {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card-actions .btn {
+    flex: 1 1 auto;
+  }
+}

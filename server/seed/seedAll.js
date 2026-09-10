@@ -10,6 +10,14 @@ const projects = [
   {
     title: 'Fake News Detector using NLP',
     slug: 'fake-news-detector',
+    thumbnail: '/thumbnails/fake-news-detector.svg',
+    description: [
+      "A natural-language-processing system that reads a news article and classifies it as real or fake.",
+      "Trained on the Kaggle Fake and Real News Dataset of roughly 44,000 labelled articles.",
+      "The baseline pipeline uses TF-IDF features with a Logistic Regression classifier.",
+      "A BERT-based deep-learning version is in development for better contextual accuracy.",
+      "Purpose: help flag misinformation automatically instead of checking every article by hand.",
+    ],
     category: 'AI/ML · NLP',
     icon: '🧠',
     overview:
@@ -49,6 +57,14 @@ const projects = [
   {
     title: 'Campus Lost & Found Portal',
     slug: 'campus-lost-found-portal',
+    thumbnail: '/thumbnails/campus-lost-found-portal.svg',
+    description: [
+      "A centralised MERN web portal where students post lost or found items with photos and location.",
+      "Replaces scattered WhatsApp groups and physical noticeboards with one searchable database.",
+      "Item images are uploaded through Cloudinary and stored against each report in MongoDB.",
+      "A pretrained ResNet generates image embeddings to suggest possible matching items.",
+      "Purpose: reunite people with lost belongings faster through image and location matching.",
+    ],
     category: 'Full Stack · MERN',
     icon: '🎓',
     overview:
@@ -82,6 +98,14 @@ const projects = [
   {
     title: 'Voice-Based Attendance System',
     slug: 'voice-based-attendance-system',
+    thumbnail: '/thumbnails/voice-based-attendance-system.svg',
+    description: [
+      "A speaker-recognition prototype that marks attendance from a short spoken phrase.",
+      "Each student enrols voice samples once, which become their reference voiceprint.",
+      "MFCC features are extracted with Librosa and classified by a trained SVM model.",
+      "A Tkinter desktop interface runs enrolment, recognition and the attendance log.",
+      "Purpose: remove slow manual roll-call and reduce proxy attendance in classrooms.",
+    ],
     category: 'AI/ML · Speech',
     icon: '🎙️',
     overview:
@@ -115,6 +139,14 @@ const projects = [
   {
     title: 'Mini E-commerce Store',
     slug: 'mini-ecommerce-store',
+    thumbnail: '/thumbnails/mini-ecommerce-store.svg',
+    description: [
+      "A MERN e-commerce application covering products, cart, orders and user accounts.",
+      "REST APIs handle product, cart, order and authentication modules over MongoDB.",
+      "JWT authentication with role-based access separates normal users from administrators.",
+      "Razorpay handles payments, Cloudinary product images and Nodemailer order emails.",
+      "Purpose: give a small online store everything it needs inside a single application.",
+    ],
     category: 'Full Stack · MERN',
     icon: '🛒',
     overview:
@@ -148,6 +180,14 @@ const projects = [
   {
     title: 'Spam Email Classifier',
     slug: 'spam-email-classifier',
+    thumbnail: '/thumbnails/spam-email-classifier.svg',
+    description: [
+      "A machine-learning text classifier that separates spam messages from legitimate ones.",
+      "Built on the SMS Spam Collection Dataset of about 5,572 labelled messages.",
+      "Text is lowercased, tokenised with NLTK, stop-word filtered and Porter-stemmed.",
+      "TF-IDF features feed a Multinomial Naive Bayes model reaching 97.3% accuracy.",
+      "Purpose: keep inboxes usable by filtering unwanted messages automatically.",
+    ],
     category: 'AI/ML · NLP',
     icon: '📧',
     overview:
@@ -182,6 +222,14 @@ const projects = [
   {
     title: 'Image Caption Generator',
     slug: 'image-caption-generator',
+    thumbnail: '/thumbnails/image-caption-generator.svg',
+    description: [
+      "A Show-and-Tell style prototype that writes a caption describing an input image.",
+      "A pretrained InceptionV3 encoder converts each image into a feature vector.",
+      "An LSTM decoder then generates the caption word-by-word from those features.",
+      "Trained and evaluated on the Flickr8k dataset, scoring roughly 0.55 BLEU-1.",
+      "Purpose: combine computer vision with language generation to describe images.",
+    ],
     category: 'AI/ML · Computer Vision',
     icon: '🖼️',
     overview:
@@ -211,6 +259,256 @@ const projects = [
     tech: ['Python', 'TensorFlow/Keras', 'InceptionV3', 'LSTM', 'NumPy', 'Matplotlib', 'Pillow'],
     status: 'learning',
     order: 6,
+  },
+  {
+    title: 'FaceID Pro - Real-Time Face Recognition Attendance & Access Control',
+    slug: 'faceid-pro-attendance',
+    thumbnail: '/thumbnails/faceid-pro-attendance.svg',
+    description: [
+      "A contactless biometric attendance engine that recognises faces from a live camera feed.",
+      "OpenCV bounds faces on the webcam stream and FaceNet builds 128-dimension embeddings.",
+      "Embeddings are matched by cosine similarity against an indexed PostgreSQL table via FastAPI.",
+      "Blink and micro-motion checks reject printed photos or phone screens used for spoofing.",
+      "Purpose: mark attendance in under 500 ms without touch, proxies or manual roll-call.",
+    ],
+    category: 'AI/ML · Computer Vision',
+    icon: '👤',
+    overview: 'Zero-touch biometric attendance engine that detects and verifies faces from a live video stream in under 500 ms, with blink and micro-motion anti-spoofing and a React admin dashboard.',
+    problem: 'Manual roll-call is slow and fingerprint scanners raise both proxy-attendance and touch-hygiene concerns, so attendance needed to be marked automatically and contactlessly from a camera feed.',
+    whatIBuilt: 'An automated contactless biometric attendance pipeline. OpenCV handles Haar-cascade face bounding on the webcam stream, FaceNet generates 128-dimensional vector embeddings, and those embeddings are matched against an indexed PostgreSQL database using cosine similarity through a FastAPI endpoint. Blink and micro-motion heuristics reject static smartphone or paper photo spoofing, and a React dashboard shows the attendance log.',
+    result: 'Verification runs in under 500 ms per face with 98%+ verification accuracy in the tested environment. The admin dashboard exports a daily CSV attendance report and the FastAPI backend was deployed on AWS EC2.',
+    workflow: [
+      'Captured the webcam stream and bounded faces with OpenCV Haar cascades',
+      'Generated 128-dimensional embeddings with FaceNet and matched them by cosine similarity against an indexed PostgreSQL table',
+      'Added blink and micro-motion detection heuristics to block photo/video spoofing',
+      'Built the React admin dashboard with absent/late alerts and automated daily CSV export, backend deployed on AWS EC2',
+    ],
+    limitations: [
+      'Accuracy was measured in a controlled indoor environment; low light and extreme angles still need evaluation.',
+      'The anti-spoofing check is heuristic, not a trained liveness model.',
+    ],
+    future: [
+      'Add an \'Upload Image / Test Video\' mode so the demo works where camera access is blocked',
+      'Replace the heuristic liveness check with a trained anti-spoofing model',
+      'Add analytics on late arrivals and attendance trends',
+    ],
+    metrics: [
+      { label: 'Recognition Latency', value: '<500 ms' },
+      { label: 'Verification Accuracy', value: '98%+' },
+      { label: 'Embedding Size', value: '128-d' },
+    ],
+    tech: [
+      'Python',
+      'OpenCV',
+      'FaceNet',
+      'FastAPI',
+      'PostgreSQL',
+      'React',
+      'AWS EC2',
+    ],
+    status: 'in-progress',
+    featured: true,
+    order: 7,
+  },
+  {
+    title: 'ResuMatch AI - Resume Builder & ATS Compatibility Scorer',
+    slug: 'resumatch-ai',
+    thumbnail: '/thumbnails/resumatch-ai.svg',
+    description: [
+      "A resume platform that scores a resume against a target job description on a 0-100 ATS scale.",
+      "Structured JSON prompts to LLM endpoints extract job keywords and compute relevance.",
+      "Missing keywords and inline bullet-point improvements are suggested back to the user.",
+      "A drag-and-drop editor compiles the downloadable PDF in the browser with pdf-lib.",
+      "Purpose: stop good resumes from being filtered out before a recruiter ever reads them.",
+    ],
+    category: 'Full Stack · AI',
+    icon: '📄',
+    overview: 'Full-stack resume platform that scores a resume against a target job description on a 0-100 ATS scale, suggests missing keywords, and compiles a downloadable PDF in the browser in under a second.',
+    problem: 'Most student and job-seeker resumes are filtered out by Applicant Tracking Systems before a human reads them, and there is no easy way to see which job-description keywords are missing.',
+    whatIBuilt: 'A Next.js and TypeScript application that parses a pasted job description through LLM endpoints with structured JSON prompts, calculates a relevance score, and suggests inline bullet-point improvements. The drag-and-drop editor uses pdf-lib to compile the PDF entirely client-side, and Prisma manages the PostgreSQL schema including guest session saving.',
+    result: 'ATS match rates improved by roughly 45% on the resumes tested, and PDF rendering completes in under 1 second with no server re-render. Deployed on Vercel.',
+    workflow: [
+      'Parsed target job descriptions into keywords using structured JSON LLM prompts',
+      'Built the 0-100 ATS scoring algorithm and inline bullet-point suggestions',
+      'Implemented the in-browser drag-and-drop editor with client-side pdf-lib compilation',
+      'Modelled PostgreSQL through Prisma with secure guest session saving and deployed on Vercel',
+    ],
+    limitations: [
+      'The ~45% improvement is measured on a small sample of resumes, not a benchmark dataset.',
+      'Scoring depends on LLM output, so results can vary between runs on the same input.',
+    ],
+    future: [
+      'Add a \'Fill Sample Data\' button so the demo populates in one click',
+      'Add more industry-standard resume templates',
+      'Evaluate scores against real ATS software for calibration',
+    ],
+    metrics: [
+      { label: 'ATS Match Gain', value: '~45%' },
+      { label: 'PDF Render', value: '<1 s' },
+      { label: 'Score Range', value: '0-100' },
+    ],
+    tech: [
+      'Next.js',
+      'TypeScript',
+      'Tailwind CSS',
+      'Prisma',
+      'PostgreSQL',
+      'OpenAI API',
+      'pdf-lib',
+    ],
+    status: 'in-progress',
+    featured: true,
+    order: 8,
+  },
+  {
+    title: 'AgroSense - Solar-Powered Smart Irrigation & Soil Health System',
+    slug: 'agrosense-solar-iot',
+    thumbnail: '/thumbnails/agrosense-solar-iot.svg',
+    description: [
+      "An off-grid, solar-powered irrigation controller for precision agriculture.",
+      "An ESP32 in C++ samples soil moisture, temperature and battery health on deep-sleep cycles.",
+      "Telemetry is published over MQTT every 30 seconds to a Node.js broker with relay fallback.",
+      "Readings are stored in InfluxDB and charted live with React and Chart.js.",
+      "Purpose: irrigate from real soil data instead of a fixed schedule, saving water and power.",
+    ],
+    category: 'IoT · Full Stack',
+    icon: '🌿',
+    overview: 'Off-grid precision-agriculture unit where an ESP32 samples soil moisture, temperature and solar battery health, publishes telemetry over MQTT, and drives automatic irrigation shown on a React dashboard.',
+    problem: 'Traditional irrigation wastes both water and electricity because the pump runs on a fixed schedule rather than on the actual moisture level of the soil.',
+    whatIBuilt: 'An ESP32 firmware in C++ that samples capacitive soil moisture, temperature and solar battery health on low-power deep-sleep cycles, publishing telemetry every 30 seconds over MQTT to a Node.js broker with fallback local relay control. Readings are stored in InfluxDB as time-series data and visualised with React and Chart.js, including soil saturation graphs, moisture thresholds and pump actuation history.',
+    result: 'Automating the pump from live soil telemetry cut simulated water consumption by roughly 35%, and the dashboard streams soil saturation, temperature and battery level with a manual pump override.',
+    workflow: [
+      'Programmed the ESP32 in C++ to sample soil moisture, temperature and battery health with deep-sleep cycles',
+      'Engineered an MQTT pipeline publishing telemetry every 30 seconds to a Node.js broker with local relay fallback',
+      'Stored readings as time-series data in InfluxDB',
+      'Built the React + Chart.js portal with saturation graphs, thresholds and pump actuation history',
+    ],
+    limitations: [
+      'The ~35% water saving is from a simulated comparison, not a full field season.',
+      'Hardware cannot stay connected continuously, so the dashboard needs a simulation mode for demos.',
+    ],
+    future: [
+      'Add a \'Live Simulation Mode\' toggle that streams dummy sensor data when hardware is offline',
+      'Run a full crop-cycle field trial to validate water savings',
+      'Add multi-zone valve control',
+    ],
+    metrics: [
+      { label: 'Simulated Water Saved', value: '~35%' },
+      { label: 'Telemetry Interval', value: '30 s' },
+      { label: 'Power Mode', value: 'Solar + deep sleep' },
+    ],
+    tech: [
+      'ESP32',
+      'C++',
+      'MQTT',
+      'Node.js',
+      'InfluxDB',
+      'React',
+      'Chart.js',
+    ],
+    status: 'prototype',
+    featured: false,
+    order: 9,
+  },
+  {
+    title: 'PulseCheck - API Health & Uptime Monitoring Dashboard',
+    slug: 'pulsecheck-api-monitor',
+    thumbnail: '/thumbnails/pulsecheck-api-monitor.svg',
+    description: [
+      "A background monitoring service that checks the health of multiple APIs and endpoints.",
+      "Redis and BullMQ schedule non-blocking HTTP checks at 1, 5 and 15 minute intervals.",
+      "An indexed PostgreSQL schema stores latency history and consecutive failure counts.",
+      "A Next.js dashboard shows uptime blocks, latency graphs and per-monitor detail.",
+      "Purpose: learn about an outage from an email alert within 60 seconds, not from users.",
+    ],
+    category: 'Full Stack · Backend',
+    icon: '📡',
+    overview: 'Background monitoring service that pings multiple endpoints on configurable intervals, tracks latency and SSL status, and emails an incident alert within 60 seconds of a failure.',
+    problem: 'When a microservice or API goes down there is usually no automatic signal, so outages are discovered by users rather than by the team.',
+    whatIBuilt: 'A distributed background service built on Redis and BullMQ as an asynchronous cron scheduler, executing non-blocking HTTP health checks at 1-minute, 5-minute and 15-minute intervals. An indexed PostgreSQL schema tracks latency history, response payloads and consecutive failure counts over 30-day windows, and the Next.js dashboard renders uptime blocks and latency spikes.',
+    result: 'Down-alerts are dispatched through Resend transactional email within 60 seconds of a detected failure, and the dashboard reports 24-hour and 30-day uptime percentages with millisecond latency tracking.',
+    workflow: [
+      'Built the asynchronous check scheduler with Redis and BullMQ at 1m / 5m / 15m intervals',
+      'Designed the indexed PostgreSQL schema for latency history and consecutive failure counts over 30 days',
+      'Integrated Resend transactional email webhooks for down-alerts within 60 seconds',
+      'Built the Next.js dashboard with uptime blocks, latency graphs and per-monitor detail',
+    ],
+    limitations: [
+      'Checks run from a single region, so a regional network issue can read as a false outage.',
+      'Alerting is email only; no SMS or webhook channels yet.',
+    ],
+    future: [
+      'Ship pre-configured demo monitors so recruiters see live data immediately',
+      'Add multi-region checks to remove false positives',
+      'Add Slack and webhook alert channels',
+    ],
+    metrics: [
+      { label: 'Alert Latency', value: '<60 s' },
+      { label: 'Check Intervals', value: '1m / 5m / 15m' },
+      { label: 'History Window', value: '30 days' },
+    ],
+    tech: [
+      'Node.js',
+      'Express',
+      'Redis',
+      'BullMQ',
+      'PostgreSQL',
+      'Next.js',
+      'Resend API',
+    ],
+    status: 'in-progress',
+    featured: false,
+    order: 10,
+  },
+  {
+    title: 'CodeFixer AI - Code Reviewer, Bug Detector & Auto-Fixer',
+    slug: 'codefixer-ai',
+    thumbnail: '/thumbnails/codefixer-ai.svg',
+    description: [
+      "An in-browser code review workspace that analyses a snippet and proposes a fix.",
+      "Monaco Editor (the VS Code core) supports Python, JavaScript and C++ input.",
+      "A LangChain pipeline on FastAPI profiles complexity and CWE security issues.",
+      "Suggestions stream into a side-by-side diff, with Redis caching repeated snippets.",
+      "Purpose: cut the time spent reading, debugging and refactoring unfamiliar code.",
+    ],
+    category: 'Full Stack · AI',
+    icon: '🐞',
+    overview: 'In-browser code analysis workspace built on Monaco Editor that flags runtime, logical and CWE security issues and streams an optimised refactor into a side-by-side diff.',
+    problem: 'Reviewing a pull request or debugging unfamiliar code takes significant developer time, and the fix is rarely shown next to the original for quick comparison.',
+    whatIBuilt: 'A Next.js and TypeScript workspace embedding Monaco Editor (the VS Code core) against an asynchronous LangChain pipeline on FastAPI that analyses time complexity, space complexity and CWE security vulnerabilities. A diff viewer built on WebStreams streams optimised suggestions as unified inline additions and deletions, and Redis hashes code snippets so repeated logic is served from cache.',
+    result: 'Redis snippet caching serves instant reviews for repeated logic and reduced LLM inference cost by roughly 60%. The editor supports Python, JavaScript and C++ with a complexity calculator alongside the diff.',
+    workflow: [
+      'Embedded Monaco Editor with syntax highlighting for Python, JavaScript and C++',
+      'Built the asynchronous LangChain analysis pipeline for complexity and CWE vulnerability profiling',
+      'Streamed suggestions into a side-by-side diff viewer using WebStreams',
+      'Added Redis hashing of snippets to cache repeated reviews and cut inference cost ~60%',
+    ],
+    limitations: [
+      'Suggestions come from an LLM, so proposed fixes still need human review before merging.',
+      'Static analysis coverage is strongest on short snippets rather than whole repositories.',
+    ],
+    future: [
+      'Add three preset buttons (memory leak, syntax bug, inefficient loop) for one-click demos',
+      'Support whole-repository analysis instead of single snippets',
+      'Add a GitHub pull-request review integration',
+    ],
+    metrics: [
+      { label: 'Inference Cost Saved', value: '~60%' },
+      { label: 'Languages', value: 'Python / JS / C++' },
+      { label: 'Response', value: 'Streaming diff' },
+    ],
+    tech: [
+      'Next.js',
+      'TypeScript',
+      'Monaco Editor',
+      'FastAPI',
+      'LangChain',
+      'Redis',
+      'Tailwind CSS',
+    ],
+    status: 'in-progress',
+    featured: false,
+    order: 11,
   },
 ];
 
@@ -253,9 +551,18 @@ const seedAll = async () => {
     await Skill.deleteMany();
     await Skill.insertMany(skills);
 
-    // Create the admin user for the admin panel (change these via env vars)
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@rohit.com';
-    const adminPassword = process.env.ADMIN_PASSWORD || 'admin123';
+    // Admin user for the admin panel. Credentials come from the environment
+    // only — there is deliberately no default password in the codebase.
+    const adminEmail = process.env.ADMIN_EMAIL;
+    const adminPassword = process.env.ADMIN_PASSWORD;
+    if (!adminEmail || !adminPassword) {
+      throw new Error(
+        'Set ADMIN_EMAIL and ADMIN_PASSWORD in server/.env before seeding the admin user.'
+      );
+    }
+    if (adminPassword.length < 8) {
+      throw new Error('ADMIN_PASSWORD must be at least 8 characters.');
+    }
     await User.deleteMany({ role: 'admin' });
     await User.create({
       name: 'Rohit Kumar (Admin)',
@@ -265,7 +572,7 @@ const seedAll = async () => {
     });
 
     console.log(`✅ Seeded ${projects.length} projects, ${skills.length} skill categories`);
-    console.log(`✅ Admin user created → ${adminEmail} / ${adminPassword}`);
+    console.log(`✅ Admin user created → ${adminEmail} (password taken from ADMIN_PASSWORD)`);
     process.exit(0);
   } catch (error) {
     console.error(`❌ Seed error: ${error.message}`);

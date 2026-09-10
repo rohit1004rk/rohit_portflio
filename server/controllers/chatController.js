@@ -1,4 +1,5 @@
 import ChatLog from '../models/ChatLog.js';
+import { generateChatReply, isAiConfigured } from '../services/aiService.js';
 
 // ── Portfolio knowledge base used by the 24/7 assistant ────────────────
 const KNOWLEDGE = {
@@ -63,35 +64,6 @@ function getBotReply(input) {
   return `I'm not 100% sure about that one, but here's what I know: ${KNOWLEDGE.name} is a ${KNOWLEDGE.role} from ${KNOWLEDGE.college}. Try asking about his projects, skills, education, or how to contact him! 🤖`;
 }
 
-// ── Optional: call a real LLM (OpenAI-compatible) if configured ─────────
-async function callExternalAI(message) {
-  const apiKey = process.env.AI_API_KEY;
-  const apiUrl = process.env.AI_API_URL || 'https://api.openai.com/v1/chat/completions';
-  const model = process.env.AI_MODEL || 'gpt-4o-mini';
-  if (!apiKey) return null;
-  try {
-    const res = await fetch(apiUrl, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${apiKey}` },
-      body: JSON.stringify({
-        model,
-        messages: [
-          {
-            role: 'system',
-            content: `You are the assistant for ${KNOWLEDGE.name}, a ${KNOWLEDGE.role}. Be concise and helpful. Knowledge: ${JSON.stringify(KNOWLEDGE)}`,
-          },
-          { role: 'user', content: message },
-        ],
-      }),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    return data?.choices?.[0]?.message?.content || null;
-  } catch (error) {
-    return null;
-  }
-}
-
 // @desc    Send a chat message and get a reply
 // @route   POST /api/chat
 // @access  Public
@@ -102,7 +74,9 @@ export const createChat = async (req, res) => {
       return res.status(400).json({ message: 'Message is required' });
     }
 
-    let reply = await callExternalAI(message);
+    // AI first (server-side key), rule-based assistant as the always-on fallback.
+    let reply = await generateChatReply({ message, knowledge: KNOWLEDGE });
+    const source = reply ? 'ai' : 'rules';
     if (!reply) reply = getBotReply(message);
 
     const sessionId = req.body.sessionId || 'anonymous';
@@ -113,7 +87,7 @@ export const createChat = async (req, res) => {
       userAgent: req.get('user-agent') || '',
     });
 
-    res.json({ reply, logId: log._id });
+    res.json({ reply, source, aiEnabled: isAiConfigured(), logId: log._id });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
