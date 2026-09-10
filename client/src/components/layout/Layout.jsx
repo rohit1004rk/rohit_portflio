@@ -1,8 +1,7 @@
-import { Outlet } from 'react-router-dom';
-import Navbar from './Navbar.jsx';
-import Footer from './Footer.jsx';
-import ScrollToTop from './ScrollToTop.jsx';
-import ChatWidget from '../chat/ChatWidget.jsx';
+import { Outlet } from "react-router-dom";
+import Navbar from "./Navbar.jsx";
+import Footer from "./Footer.jsx";
+import ScrollToTop from "./ScrollToTop.jsx";
 
 function Layout() {
   return (
@@ -14,7 +13,6 @@ function Layout() {
         <Outlet />
       </main>
       <Footer />
-      <ChatWidget />
     </>
   );
 }
