@@ -1,0 +1,40 @@
+{
+  "name": "rohit-kumar-portfolio",
+  "version": "2.0.0",
+  "description": "Production-quality full-stack MERN portfolio for Rohit Kumar — Full Stack + AI/ML Developer",
+  "private": true,
+  "main": "server/server.js",
+  "scripts": {
+    "install-all": "npm install && npm --prefix server install && npm --prefix client install",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "server": "npm --prefix server run dev",
+    "client": "npm --prefix client run dev",
+    "build": "npm --prefix client run build",
+    "start": "npm --prefix server start",
+    "seed": "npm --prefix server run seed"
+  },
+  "keywords": [
+    "portfolio",
+    "mern",
+    "react",
+    "express",
+    "mongodb",
+    "ai",
+    "ml",
+    "fullstack"
+  ],
+  "author": "Rohit Kumar",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "helmet": "^8.3.0"
+  }
+}

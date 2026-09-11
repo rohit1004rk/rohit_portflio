@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img">
+<defs>
+<linearGradient id="bg2" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b0f14"/><stop offset="1" stop-color="#111820"/>
+</linearGradient>
+<pattern id="grid2" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0v32" fill="none" stroke="#273342" stroke-width="1" opacity="0.45"/>
+</pattern>
+</defs>
+<rect width="640" height="360" fill="url(#bg2)"/>
+<rect width="640" height="360" fill="url(#grid2)"/>
+<circle cx="565" cy="-30" r="150" fill="#ffb454" opacity="0.07"/>
+<circle cx="60" cy="390" r="150" fill="#4fd8c4" opacity="0.06"/>
+<text x="36" y="48" font-family="JetBrains Mono, Menlo, monospace" font-size="13" letter-spacing="2" fill="#4fd8c4">AI/ML · SPEECH</text>
+<text x="36" y="80" font-family="Space Grotesk, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#f1f5f9">Voice Attendance</text>
+<rect x="36" y="120" width="568" height="196" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><circle cx="104" cy="218" r="42" fill="#ffb454" opacity="0.14" stroke="#ffb454"/><rect x="96" y="196" width="16" height="30" rx="8" fill="#ffb454"/><path d="M86 224a18 18 0 0 0 36 0" fill="none" stroke="#ffb454" stroke-width="3"/><path d="M104 242v10" stroke="#ffb454" stroke-width="3"/><rect x="176" y="209" width="9" height="18" rx="4" fill="#ffb454" opacity="0.75"/><rect x="197" y="201" width="9" height="34" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="218" y="192" width="9" height="52" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="239" y="181" width="9" height="74" rx="4" fill="#ffb454" opacity="0.75"/><rect x="260" y="195" width="9" height="46" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="281" y="174" width="9" height="88" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="302" y="188" width="9" height="60" rx="4" fill="#ffb454" opacity="0.75"/><rect x="323" y="203" width="9" height="30" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="344" y="185" width="9" height="66" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="365" y="170" width="9" height="96" rx="4" fill="#ffb454" opacity="0.75"/><rect x="386" y="192" width="9" height="52" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="407" y="199" width="9" height="38" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="428" y="182" width="9" height="72" rx="4" fill="#ffb454" opacity="0.75"/><rect x="449" y="196" width="9" height="44" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="470" y="206" width="9" height="24" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="491" y="189" width="9" height="58" rx="4" fill="#ffb454" opacity="0.75"/><rect x="512" y="177" width="9" height="82" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="533" y="198" width="9" height="40" rx="4" fill="#4fd8c4" opacity="0.75"/><rect x="554" y="204" width="9" height="28" rx="4" fill="#ffb454" opacity="0.75"/><rect x="575" y="193" width="9" height="50" rx="4" fill="#4fd8c4" opacity="0.75"/><text x="176" y="296" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#64748b">MFCC → SVM → SPEAKER ID</text></svg>
