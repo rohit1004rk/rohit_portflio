@@ -85,6 +85,71 @@ export const education = [
     icon: "🏫",
   },
 ];
+export const experience = [
+  {
+    id: "internpe-ai-ml-2026",
+    years: "27 Apr 2026 – 07 Jun 2026",
+    role: "AI/ML Intern",
+    company: "InternPe",
+    domain: "Artificial Intelligence / Machine Learning",
+    startDate: "27 April 2026",
+    endDate: "07 June 2026",
+    duration: "27 April 2026 – 07 June 2026",
+    certificateId: "IPI#75119",
+    description:
+      "Completed an AI/ML internship at InternPe with exposure to professional internship practices, dedicated learning, and practical experience in the AI/ML domain.",
+    learnings: [
+      "Gained practical exposure to the AI/ML domain.",
+      "Developed professional work habits and a disciplined approach to technical learning.",
+      "Strengthened understanding through internship-based practical experience.",
+    ],
+    type: "Internship",
+    icon: "🤖",
+  },
+
+  {
+    id: "edulogy-entrepreneurship-ai-2026",
+    years: "16 Mar 2026 – 27 Apr 2026",
+    role: "Summer Entrepreneurship-II Program",
+    company: "Edulogy Institute",
+    domain: "Artificial Intelligence",
+    startDate: "16 March 2026",
+    endDate: "27 April 2026",
+    duration: "6 Weeks",
+    certificateId: "2K26-ENTR-95899",
+    grade: "A++",
+    description:
+      "Completed the Summer Entrepreneurship-II Program at Edulogy Institute in the field of Artificial Intelligence as a practical learning and entrepreneurship experience.",
+    learnings: [
+      "Gained practical exposure to entrepreneurship in the Artificial Intelligence field.",
+      "Completed a structured six-week learning program.",
+      "Developed practical understanding through an entrepreneurship-focused program.",
+    ],
+    type: "Entrepreneurship Program",
+    icon: "🚀",
+  },
+
+  {
+    id: "internpe-web-development-2025",
+    years: "02 Jun 2025 – 29 Jun 2025",
+    role: "Web Development Intern",
+    company: "InternPe",
+    domain: "Web Development",
+    startDate: "02 June 2025",
+    endDate: "29 June 2025",
+    duration: "04 Weeks",
+    certificateId: "IPI#56313",
+    description:
+      "Completed a four-week Web Development internship at InternPe as a learning opportunity focused on developing practical understanding and experience in web development.",
+    learnings: [
+      "Gained practical exposure to web development.",
+      "Strengthened understanding through structured internship learning.",
+      "Developed professional experience in a real internship environment.",
+    ],
+    type: "Internship",
+    icon: "💻",
+  },
+];
 export const fallbackSkills = [
   {
     category: "Programming Languages",

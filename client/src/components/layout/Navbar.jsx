@@ -7,6 +7,7 @@ const links = [
   { label: "About", to: "/about" },
   { label: "Skills", to: "/skills" },
   { label: "Projects", to: "/projects" },
+  { label: "Experience", to: "/experience" },
   { label: "Achievements", to: "/achievements" },
   { label: "Education", to: "/education" },
   { label: "Resume", to: "/resume" },
@@ -66,19 +67,19 @@ function Navbar() {
               </NavLink>
             </li>
           ))}
-          <li>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive ? "active nav-cta" : "nav-cta"
-              }
-            >
-              Contact Me
-            </NavLink>
-          </li>
         </ul>
 
         <div className="nav-actions">
+          <NavLink
+            to="/contact"
+            className={({ isActive }) =>
+              isActive
+                ? "active nav-cta nav-cta-desktop"
+                : "nav-cta nav-cta-desktop"
+            }
+          >
+            Contact Me
+          </NavLink>
           <NavLink
             to="/contact"
             className={({ isActive }) =>

@@ -18,7 +18,7 @@ function Footer() {
       <div className="container footer-inner">
         <div className="footer-brand">
           <p className="footer-copyright">
-            © 2025 Rohit Kumar. All rights reserved.
+            © 2026 Rohit Kumar. All rights reserved.
           </p>
 
           <p className="footer-role">FULL STACK + AI/ML DEVELOPER</p>

@@ -10,7 +10,11 @@ const api = axios.create({
 });
 
 /** Authorization header for admin-only endpoints. */
-const auth = (token) => ({ headers: { Authorization: `Bearer ${token}` } });
+const auth = (token) => ({
+  headers: {
+    Authorization: `Bearer ${token}`,
+  },
+});
 
 // ── Projects ─────────────────────────────────────────────
 export const fetchProjects = async () => {
@@ -78,5 +82,29 @@ export const fetchChatLogs = async (token) => {
 
 export const deleteChatLog = async (id, token) => {
   const { data } = await api.delete(`/api/chat/${id}`, auth(token));
+  return data;
+};
+
+// ── Certificates ─────────────────────────────────────────
+
+export const fetchCertificates = async () => {
+  const { data } = await api.get("/api/certificates");
+  return data;
+};
+
+export const uploadCertificate = async (formData, token) => {
+  const { data } = await api.post("/api/certificates", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+
+  return data;
+};
+
+export const deleteCertificate = async (id, token) => {
+  const { data } = await api.delete(`/api/certificates/${id}`, auth(token));
+
   return data;
 };
