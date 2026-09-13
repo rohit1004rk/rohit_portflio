@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img">
+<defs>
+<linearGradient id="bg5" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b0f14"/><stop offset="1" stop-color="#111820"/>
+</linearGradient>
+<pattern id="grid5" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0v32" fill="none" stroke="#273342" stroke-width="1" opacity="0.45"/>
+</pattern>
+</defs>
+<rect width="640" height="360" fill="url(#bg5)"/>
+<rect width="640" height="360" fill="url(#grid5)"/>
+<circle cx="565" cy="-30" r="150" fill="#ffb454" opacity="0.07"/>
+<circle cx="60" cy="390" r="150" fill="#4fd8c4" opacity="0.06"/>
+<text x="36" y="48" font-family="JetBrains Mono, Menlo, monospace" font-size="13" letter-spacing="2" fill="#4fd8c4">AI/ML · COMPUTER VISION</text>
+<text x="36" y="80" font-family="Space Grotesk, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#f1f5f9">Image Caption Generator</text>
+<rect x="36" y="122" width="280" height="186" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><circle cx="110" cy="172" r="20" fill="#ffb454" opacity="0.75"/><path d="M52 286l70-84 52 60 40-44 66 68z" fill="#4fd8c4" opacity="0.35"/><path d="M52 286l70-84 52 60" fill="none" stroke="#4fd8c4" stroke-width="2"/><rect x="344" y="122" width="260" height="186" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><text x="366" y="152" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#4fd8c4">CAPTION</text><rect x="366" y="172" width="214" height="9" rx="3" fill="#f1f5f9" opacity="0.6"/><rect x="366" y="192" width="170" height="9" rx="3" fill="#64748b" opacity="0.4"/><rect x="366" y="212" width="126" height="9" rx="3" fill="#64748b" opacity="0.4"/><rect x="366" y="232" width="214" height="9" rx="3" fill="#64748b" opacity="0.4"/><text x="366" y="284" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#64748b">InceptionV3 → LSTM</text></svg>
