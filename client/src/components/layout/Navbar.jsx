@@ -3,7 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme.js";
 
 const links = [
-<<<<<<< HEAD
   { label: "Home", to: "/", icon: "home" },
   { label: "About", to: "/about", icon: "user" },
   { label: "Skills", to: "/skills", icon: "code" },
@@ -195,18 +194,6 @@ function MenuIcon({ name }) {
   }
 }
 
-=======
-  { label: "Home", to: "/" },
-  { label: "About", to: "/about" },
-  { label: "Skills", to: "/skills" },
-  { label: "Projects", to: "/projects" },
-  { label: "Experience", to: "/experience" },
-  { label: "Achievements", to: "/achievements" },
-  { label: "Education", to: "/education" },
-  { label: "Resume", to: "/resume" },
-];
-
->>>>>>> origin/main
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -215,52 +202,32 @@ function Navbar() {
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
-<<<<<<< HEAD
 
     window.addEventListener("scroll", onScroll);
-
-=======
-    window.addEventListener("scroll", onScroll);
->>>>>>> origin/main
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
   useEffect(() => {
     const onKey = (e) => {
-<<<<<<< HEAD
       if (e.key === "Escape") {
         setOpen(false);
       }
     };
 
     window.addEventListener("keydown", onKey);
-
-=======
-      if (e.key === "Escape") setOpen(false);
-    };
-    window.addEventListener("keydown", onKey);
->>>>>>> origin/main
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
   useEffect(() => {
     if (!open) return;
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
     const onClick = (e) => {
       if (navRef.current && !navRef.current.contains(e.target)) {
         setOpen(false);
       }
     };
-<<<<<<< HEAD
 
     document.addEventListener("mousedown", onClick);
-
-=======
-    document.addEventListener("mousedown", onClick);
->>>>>>> origin/main
     return () => document.removeEventListener("mousedown", onClick);
   }, [open]);
 
@@ -269,20 +236,14 @@ function Navbar() {
       <div className="nav-inner">
         <Link className="brand" to="/" onClick={() => setOpen(false)}>
           <span className="logo">RK</span>
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
           <span>
             Rohit Kumar
             <small>FULL STACK + AI/ML</small>
           </span>
         </Link>
 
-<<<<<<< HEAD
-        {/* Desktop navigation — unchanged */}
-=======
->>>>>>> origin/main
+        {/* Desktop navigation */}
         <ul className="nav-links">
           {links.map((l) => (
             <li key={l.to}>
@@ -308,10 +269,7 @@ function Navbar() {
           >
             Contact Me
           </NavLink>
-<<<<<<< HEAD
 
-=======
->>>>>>> origin/main
           <NavLink
             to="/contact"
             className={({ isActive }) =>
@@ -323,13 +281,9 @@ function Navbar() {
           >
             Contact Me
           </NavLink>
-<<<<<<< HEAD
 
           <button
             type="button"
-=======
-          <button
->>>>>>> origin/main
             className="theme-toggle"
             aria-label={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
             title={`Switch to ${theme === "dark" ? "light" : "dark"} mode`}
@@ -337,13 +291,9 @@ function Navbar() {
           >
             {theme === "dark" ? "☀️" : "🌙"}
           </button>
-<<<<<<< HEAD
 
           <button
             type="button"
-=======
-          <button
->>>>>>> origin/main
             className={`burger ${open ? "open" : ""}`}
             aria-label="Toggle menu"
             aria-expanded={open}
@@ -355,10 +305,7 @@ function Navbar() {
           </button>
         </div>
 
-<<<<<<< HEAD
         {/* Mobile side menu */}
-=======
->>>>>>> origin/main
         <ul className={`nav-dropdown ${open ? "open" : ""}`}>
           {links.map((l) => (
             <li key={l.to}>
@@ -368,7 +315,6 @@ function Navbar() {
                 className={({ isActive }) => (isActive ? "active" : "")}
                 onClick={() => setOpen(false)}
               >
-<<<<<<< HEAD
                 <span className="nav-menu-icon">
                   <MenuIcon name={l.icon} />
                 </span>
@@ -378,12 +324,6 @@ function Navbar() {
             </li>
           ))}
 
-=======
-                {l.label}
-              </NavLink>
-            </li>
-          ))}
->>>>>>> origin/main
           <li>
             <NavLink
               to="/contact"
@@ -392,15 +332,11 @@ function Navbar() {
               }
               onClick={() => setOpen(false)}
             >
-<<<<<<< HEAD
               <span className="nav-menu-icon">
                 <MenuIcon name="mail" />
               </span>
 
               <span className="nav-menu-label">Contact Me</span>
-=======
-              Contact Me
->>>>>>> origin/main
             </NavLink>
           </li>
         </ul>
