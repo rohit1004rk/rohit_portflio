@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img">
+<defs>
+<linearGradient id="bg7" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b0f14"/><stop offset="1" stop-color="#111820"/>
+</linearGradient>
+<pattern id="grid7" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0v32" fill="none" stroke="#273342" stroke-width="1" opacity="0.45"/>
+</pattern>
+</defs>
+<rect width="640" height="360" fill="url(#bg7)"/>
+<rect width="640" height="360" fill="url(#grid7)"/>
+<circle cx="565" cy="-30" r="150" fill="#ffb454" opacity="0.07"/>
+<circle cx="60" cy="390" r="150" fill="#4fd8c4" opacity="0.06"/>
+<text x="36" y="48" font-family="JetBrains Mono, Menlo, monospace" font-size="13" letter-spacing="2" fill="#4fd8c4">FULL STACK · AI</text>
+<text x="36" y="80" font-family="Space Grotesk, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#f1f5f9">ResuMatch AI</text>
+<rect x="36" y="118" width="250" height="198" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><rect x="58" y="142" width="120" height="12" rx="3" fill="#f1f5f9" opacity="0.85"/><rect x="58" y="164" width="176" height="8" rx="3" fill="#64748b" opacity="0.4"/><rect x="58" y="192" width="206" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="58" y="214" width="154" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="58" y="236" width="206" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="58" y="258" width="154" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="58" y="280" width="206" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="310" y="118" width="294" height="198" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><circle cx="390" cy="196" r="48" fill="none" stroke="#273342" stroke-width="10"/><circle cx="390" cy="196" r="48" fill="none" stroke="#4fd8c4" stroke-width="10" stroke-linecap="round" stroke-dasharray="274 302" transform="rotate(-90 390 196)"/><text x="390" y="204" text-anchor="middle" font-family="Space Grotesk, sans-serif" font-size="28" font-weight="700" fill="#f1f5f9">91</text><text x="352" y="268" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#4fd8c4">ATS SCORE</text><rect x="462" y="150" width="120" height="26" rx="13" fill="#ffb454" opacity="0.12" stroke="#ffb454"/><text x="476" y="168" font-family="JetBrains Mono, Menlo, monospace" font-size="11" fill="#ffb454">+ REST API</text><rect x="462" y="184" width="120" height="26" rx="13" fill="#ffb454" opacity="0.12" stroke="#ffb454"/><text x="476" y="202" font-family="JetBrains Mono, Menlo, monospace" font-size="11" fill="#ffb454">+ DOCKER</text><rect x="462" y="218" width="120" height="26" rx="13" fill="#ffb454" opacity="0.12" stroke="#ffb454"/><text x="476" y="236" font-family="JetBrains Mono, Menlo, monospace" font-size="11" fill="#ffb454">+ CI/CD</text><text x="462" y="292" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#64748b">PDF &lt; 1s</text></svg>
