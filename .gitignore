@@ -28,3 +28,5 @@ build/
 
 # Vercel / Render local output
 .vercel/
+# Local Git safety backup
+.git-safety-backup/
