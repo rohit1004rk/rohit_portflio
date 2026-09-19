@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 360" width="640" height="360" role="img">
+<defs>
+<linearGradient id="bg3" x1="0" y1="0" x2="1" y2="1">
+<stop offset="0" stop-color="#0b0f14"/><stop offset="1" stop-color="#111820"/>
+</linearGradient>
+<pattern id="grid3" width="32" height="32" patternUnits="userSpaceOnUse">
+<path d="M32 0H0v32" fill="none" stroke="#273342" stroke-width="1" opacity="0.45"/>
+</pattern>
+</defs>
+<rect width="640" height="360" fill="url(#bg3)"/>
+<rect width="640" height="360" fill="url(#grid3)"/>
+<circle cx="565" cy="-30" r="150" fill="#ffb454" opacity="0.07"/>
+<circle cx="60" cy="390" r="150" fill="#4fd8c4" opacity="0.06"/>
+<text x="36" y="48" font-family="JetBrains Mono, Menlo, monospace" font-size="13" letter-spacing="2" fill="#4fd8c4">FULL STACK · MERN</text>
+<text x="36" y="80" font-family="Space Grotesk, Segoe UI, sans-serif" font-size="25" font-weight="700" fill="#f1f5f9">Mini E-commerce Store</text>
+<rect x="36" y="128" width="116" height="104" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><rect x="52" y="144" width="84" height="46" rx="6" fill="#64748b" opacity="0.35"/><rect x="52" y="200" width="56" height="8" rx="3" fill="#64748b" opacity="0.55"/><text x="52" y="224" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#ffb454">₹ 1,299</text><rect x="168" y="128" width="116" height="104" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><rect x="184" y="144" width="84" height="46" rx="6" fill="#64748b" opacity="0.35"/><rect x="184" y="200" width="56" height="8" rx="3" fill="#64748b" opacity="0.55"/><text x="184" y="224" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#ffb454">₹ 1,299</text><rect x="300" y="128" width="116" height="104" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><rect x="316" y="144" width="84" height="46" rx="6" fill="#64748b" opacity="0.35"/><rect x="316" y="200" width="56" height="8" rx="3" fill="#64748b" opacity="0.55"/><text x="316" y="224" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#ffb454">₹ 1,299</text><rect x="436" y="128" width="168" height="178" rx="12" fill="#18212c" stroke="#273342" opacity="1"/><path d="M470 168h84l-10 46h-64z" fill="none" stroke="#ffb454" stroke-width="3"/><path d="M462 156h12l6 12" fill="none" stroke="#ffb454" stroke-width="3"/><circle cx="482" cy="228" r="7" fill="#ffb454"/><circle cx="538" cy="228" r="7" fill="#ffb454"/><rect x="466" y="254" width="108" height="30" rx="15" fill="#4fd8c4" opacity="0.16" stroke="#4fd8c4"/><text x="482" y="273" font-family="JetBrains Mono, Menlo, monospace" font-size="12" fill="#4fd8c4">CHECKOUT</text><rect x="36" y="254" width="380" height="8" rx="3" fill="#64748b" opacity="0.55"/><rect x="36" y="274" width="300" height="8" rx="3" fill="#64748b" opacity="0.55"/></svg>
