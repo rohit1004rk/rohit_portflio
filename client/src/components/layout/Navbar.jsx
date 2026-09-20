@@ -10,6 +10,7 @@ const links = [
   { label: "Experience", to: "/experience", icon: "briefcase" },
   { label: "Achievements", to: "/achievements", icon: "award" },
   { label: "Education", to: "/education", icon: "education" },
+  { label: "Blog", to: "/blog", icon: "blog" },
   { label: "Resume", to: "/resume", icon: "file" },
 ];
 
@@ -145,6 +146,27 @@ function MenuIcon({ name }) {
             strokeWidth="1.8"
             strokeLinecap="round"
             strokeLinejoin="round"
+          />
+        </svg>
+      );
+
+    case "blog":
+      return (
+        <svg {...commonProps}>
+          <rect
+            x="4"
+            y="3"
+            width="16"
+            height="18"
+            rx="2"
+            stroke="currentColor"
+            strokeWidth="1.8"
+          />
+          <path
+            d="M8 8h8M8 12h8M8 16h5"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
           />
         </svg>
       );

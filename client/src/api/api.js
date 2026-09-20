@@ -431,3 +431,37 @@ export const deleteEducation = async (id, token) => {
 
   return data;
 };
+
+// ── Home ─────────────────────────────────────────────────
+
+export const fetchHomeAdmin = async (token) => {
+  const { data } = await api.get("/api/home/admin", auth(token));
+  return data;
+};
+
+export const updateHome = async (homeData, token) => {
+  const { data } = await api.put("/api/home", homeData, auth(token));
+  return data;
+};
+
+export const fetchHome = async () => {
+  const { data } = await api.get("/api/home");
+  return data;
+};
+
+// ── About ────────────────────────────────────────────────
+
+export const fetchAboutAdmin = async (token) => {
+  const { data } = await api.get("/api/about/admin", auth(token));
+  return data;
+};
+
+export const updateAbout = async (aboutData, token) => {
+  const { data } = await api.put("/api/about", aboutData, auth(token));
+  return data;
+};
+
+export const fetchAbout = async () => {
+  const { data } = await api.get("/api/about");
+  return data;
+};

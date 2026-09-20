@@ -17,6 +17,8 @@ import helmet from "helmet";
 import morgan from "morgan";
 import rateLimit from "express-rate-limit";
 
+import homeRoutes from "./routes/homeRoutes.js";
+import aboutRoutes from "./routes/aboutRoutes.js";
 import connectDB from "./config/db.js";
 import projectRoutes from "./routes/projectRoutes.js";
 import skillRoutes from "./routes/skillRoutes.js";
@@ -28,6 +30,7 @@ import certificateRoutes from "./routes/certificateRoutes.js";
 import experienceRoutes from "./routes/experienceRoutes.js";
 import educationRoutes from "./routes/educationRoutes.js";
 import portfolioSettingsRoutes from "./routes/portfolioSettingsRoutes.js";
+import blogRoutes from "./routes/blogRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
 
 const app = express();
@@ -87,9 +90,6 @@ const chatLimiter = rateLimit({
   },
 });
 
-// Contact-form rate limiter must apply ONLY to POST /api/messages.
-// Admin GET/PATCH/DELETE message operations must not consume
-// the public contact-form request limit.
 const contactPostLimiter = (req, res, next) => {
   if (req.method === "POST") {
     return contactLimiter(req, res, next);
@@ -119,10 +119,6 @@ app.get("/api/health", (req, res) =>
 app.use("/api/projects", apiLimiter, projectRoutes);
 app.use("/api/skills", apiLimiter, skillRoutes);
 
-// IMPORTANT:
-// Only public contact-form POST requests use contactLimiter.
-// Admin message GET/PATCH/DELETE requests are protected by
-// protect + admin inside messageRoutes.js.
 app.use("/api/messages", contactPostLimiter, messageRoutes);
 
 app.use("/api/auth", apiLimiter, authRoutes);
@@ -132,6 +128,13 @@ app.use("/api/settings", portfolioSettingsRoutes);
 app.use("/api/certificates", apiLimiter, certificateRoutes);
 app.use("/api/experiences", apiLimiter, experienceRoutes);
 app.use("/api/education", apiLimiter, educationRoutes);
+app.use("/api/blogs", apiLimiter, blogRoutes);
+
+// Home API
+app.use("/api/home", apiLimiter, homeRoutes);
+
+// About API
+app.use("/api/about", apiLimiter, aboutRoutes);
 
 // ── Serve the built React app in production ───────────────
 if (process.env.NODE_ENV === "production") {
@@ -141,8 +144,6 @@ if (process.env.NODE_ENV === "production") {
   if (fs.existsSync(indexPath)) {
     app.use(express.static(distPath));
 
-    // SPA fallback — every non-API route returns index.html so refreshing
-    // /projects, /about, /projects/:slug, /admin never 404s.
     app.get(/^(?!\/api).*/, (req, res) => res.sendFile(indexPath));
   } else {
     console.warn(

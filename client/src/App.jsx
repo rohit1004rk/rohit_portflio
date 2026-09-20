@@ -12,11 +12,16 @@ import ResumePage from "./pages/ResumePage.jsx";
 import ContactPage from "./pages/ContactPage.jsx";
 import NotFoundPage from "./pages/NotFoundPage.jsx";
 
+import BlogPage from "./pages/BlogPage.jsx";
+import BlogPostPage from "./pages/BlogPostPage.jsx";
+
 import AdminLoginPage from "./pages/AdminLoginPage.jsx";
 import AdminForgotPasswordPage from "./pages/AdminForgotPasswordPage.jsx";
 import AdminResetPasswordPage from "./pages/AdminResetPasswordPage.jsx";
 
+import AdminHomePage from "./pages/AdminHomePage.jsx";
 import AdminDashboardPage from "./pages/AdminDashboardPage.jsx";
+import AdminAboutPage from "./pages/AdminAboutPage.jsx";
 import AdminExperiencePage from "./pages/AdminExperiencePage.jsx";
 import AdminSkillsPage from "./pages/AdminSkillsPage.jsx";
 import AdminProjectsPage from "./pages/AdminProjectsPage.jsx";
@@ -24,6 +29,7 @@ import AdminEducationPage from "./pages/AdminEducationPage.jsx";
 import AdminCertificatesPage from "./pages/AdminCertificatesPage.jsx";
 import AdminMessagesPage from "./pages/AdminMessagesPage.jsx";
 import AdminPortfolioSettingsPage from "./pages/AdminPortfolioSettingsPage.jsx";
+import AdminBlogPage from "./pages/AdminBlogPage.jsx";
 
 function App() {
   return (
@@ -39,6 +45,10 @@ function App() {
         <Route path="/education" element={<EducationPage />} />
         <Route path="/resume" element={<ResumePage />} />
         <Route path="/contact" element={<ContactPage />} />
+
+        <Route path="/blog" element={<BlogPage />} />
+        <Route path="/blog/:slug" element={<BlogPostPage />} />
+
         <Route path="*" element={<NotFoundPage />} />
       </Route>
 
@@ -54,7 +64,9 @@ function App() {
         element={<AdminResetPasswordPage />}
       />
 
+      <Route path="/admin/home" element={<AdminHomePage />} />
       <Route path="/admin" element={<AdminDashboardPage />} />
+      <Route path="/admin/about" element={<AdminAboutPage />} />
       <Route path="/admin/projects" element={<AdminProjectsPage />} />
       <Route path="/admin/skills" element={<AdminSkillsPage />} />
       <Route path="/admin/experience" element={<AdminExperiencePage />} />
@@ -62,6 +74,7 @@ function App() {
       <Route path="/admin/certificates" element={<AdminCertificatesPage />} />
       <Route path="/admin/messages" element={<AdminMessagesPage />} />
       <Route path="/admin/settings" element={<AdminPortfolioSettingsPage />} />
+      <Route path="/admin/blog" element={<AdminBlogPage />} />
     </Routes>
   );
 }
