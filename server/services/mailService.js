@@ -17,10 +17,15 @@ const createTransporter = () =>
     host: process.env.SMTP_HOST || "smtp.gmail.com",
     port: Number(process.env.SMTP_PORT) || 587,
     secure: Number(process.env.SMTP_PORT) === 465,
+
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
+
+    connectionTimeout: 15000,
+    greetingTimeout: 15000,
+    dnsTimeout: 10000,
   });
 
 /**
