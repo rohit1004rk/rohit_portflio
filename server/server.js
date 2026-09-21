@@ -26,13 +26,14 @@ import messageRoutes from "./routes/messageRoutes.js";
 import authRoutes from "./routes/authRoutes.js";
 import chatRoutes from "./routes/chatRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
+import analyticsRoutes from "./routes/analyticsRoutes.js";
 import certificateRoutes from "./routes/certificateRoutes.js";
 import experienceRoutes from "./routes/experienceRoutes.js";
 import educationRoutes from "./routes/educationRoutes.js";
 import portfolioSettingsRoutes from "./routes/portfolioSettingsRoutes.js";
 import blogRoutes from "./routes/blogRoutes.js";
+import resumeRoutes from "./routes/resumeRoutes.js";
 import { errorHandler, notFound } from "./middleware/errorMiddleware.js";
-
 const app = express();
 
 // Render/Railway/Vercel run behind a proxy: needed for correct client IPs
@@ -60,7 +61,7 @@ app.use(express.urlencoded({ extended: true, limit: "1mb" }));
 if (process.env.NODE_ENV !== "production") {
   app.use(morgan("dev"));
 }
-
+app.use("/api/resume", resumeRoutes);
 // ── Rate limiting ────────────────────────────────────────
 
 const apiLimiter = rateLimit({
@@ -124,6 +125,7 @@ app.use("/api/messages", contactPostLimiter, messageRoutes);
 app.use("/api/auth", apiLimiter, authRoutes);
 app.use("/api/chat", chatLimiter, chatRoutes);
 app.use("/api/admin", adminRoutes);
+app.use("/api/analytics", analyticsRoutes);
 app.use("/api/settings", portfolioSettingsRoutes);
 app.use("/api/certificates", apiLimiter, certificateRoutes);
 app.use("/api/experiences", apiLimiter, experienceRoutes);

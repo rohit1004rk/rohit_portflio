@@ -1,8 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { useTheme } from "../../hooks/useTheme.js";
+import { fetchPublicPortfolioSettings } from "../../api/api.js";
 
-const links = [
+const fallbackLinks = [
   { label: "Home", to: "/", icon: "home" },
   { label: "About", to: "/about", icon: "user" },
   { label: "Skills", to: "/skills", icon: "code" },
@@ -13,6 +14,26 @@ const links = [
   { label: "Blog", to: "/blog", icon: "blog" },
   { label: "Resume", to: "/resume", icon: "file" },
 ];
+
+const iconMap = {
+  home: "home",
+  about: "user",
+  skills: "code",
+  projects: "folder",
+  experience: "briefcase",
+  achievements: "award",
+  education: "education",
+  blog: "blog",
+  resume: "file",
+  contact: "mail",
+};
+
+function getNavigationIcon(item) {
+  const id = String(item?.id || "").toLowerCase();
+  const label = String(item?.label || "").toLowerCase();
+
+  return iconMap[id] || iconMap[label] || "file";
+}
 
 function MenuIcon({ name }) {
   const commonProps = {
@@ -219,8 +240,25 @@ function MenuIcon({ name }) {
 function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [navigation, setNavigation] = useState(null);
   const { theme, toggleTheme } = useTheme();
   const navRef = useRef(null);
+
+  useEffect(() => {
+    const loadNavigation = async () => {
+      try {
+        const settings = await fetchPublicPortfolioSettings();
+
+        if (settings?.navigation) {
+          setNavigation(settings.navigation);
+        }
+      } catch (error) {
+        console.error("Failed to load public navigation settings:", error);
+      }
+    };
+
+    loadNavigation();
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 10);
@@ -253,6 +291,35 @@ function Navbar() {
     return () => document.removeEventListener("mousedown", onClick);
   }, [open]);
 
+  const configuredLinks =
+    navigation?.enabled === false
+      ? []
+      : Array.isArray(navigation?.items)
+        ? navigation.items
+            .filter(
+              (item) => item?.enabled !== false && item?.label && item?.url,
+            )
+            .sort((a, b) => Number(a?.order ?? 0) - Number(b?.order ?? 0))
+            .map((item) => ({
+              ...item,
+              to: item.url,
+              icon: getNavigationIcon(item),
+            }))
+        : null;
+
+  const links =
+    configuredLinks && configuredLinks.length > 0
+      ? configuredLinks
+      : fallbackLinks;
+
+  const hasConfiguredContact = links.some(
+    (item) =>
+      String(item?.id || "").toLowerCase() === "contact" ||
+      String(item?.label || "").toLowerCase() === "contact",
+  );
+
+  const showContactCta = !hasConfiguredContact;
+
   return (
     <nav className={`nav ${scrolled ? "scrolled" : ""}`} ref={navRef}>
       <div className="nav-inner">
@@ -268,7 +335,7 @@ function Navbar() {
         {/* Desktop navigation */}
         <ul className="nav-links">
           {links.map((l) => (
-            <li key={l.to}>
+            <li key={l.id || l.to}>
               <NavLink
                 to={l.to}
                 end={l.to === "/"}
@@ -281,28 +348,32 @@ function Navbar() {
         </ul>
 
         <div className="nav-actions">
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? "active nav-cta nav-cta-desktop"
-                : "nav-cta nav-cta-desktop"
-            }
-          >
-            Contact Me
-          </NavLink>
+          {showContactCta ? (
+            <>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active nav-cta nav-cta-desktop"
+                    : "nav-cta nav-cta-desktop"
+                }
+              >
+                Contact Me
+              </NavLink>
 
-          <NavLink
-            to="/contact"
-            className={({ isActive }) =>
-              isActive
-                ? "active nav-cta nav-cta-mobile"
-                : "nav-cta nav-cta-mobile"
-            }
-            onClick={() => setOpen(false)}
-          >
-            Contact Me
-          </NavLink>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive
+                    ? "active nav-cta nav-cta-mobile"
+                    : "nav-cta nav-cta-mobile"
+                }
+                onClick={() => setOpen(false)}
+              >
+                Contact Me
+              </NavLink>
+            </>
+          ) : null}
 
           <button
             type="button"
@@ -330,7 +401,7 @@ function Navbar() {
         {/* Mobile side menu */}
         <ul className={`nav-dropdown ${open ? "open" : ""}`}>
           {links.map((l) => (
-            <li key={l.to}>
+            <li key={l.id || l.to}>
               <NavLink
                 to={l.to}
                 end={l.to === "/"}
@@ -346,21 +417,23 @@ function Navbar() {
             </li>
           ))}
 
-          <li>
-            <NavLink
-              to="/contact"
-              className={({ isActive }) =>
-                isActive ? "active nav-cta" : "nav-cta"
-              }
-              onClick={() => setOpen(false)}
-            >
-              <span className="nav-menu-icon">
-                <MenuIcon name="mail" />
-              </span>
+          {showContactCta ? (
+            <li>
+              <NavLink
+                to="/contact"
+                className={({ isActive }) =>
+                  isActive ? "active nav-cta" : "nav-cta"
+                }
+                onClick={() => setOpen(false)}
+              >
+                <span className="nav-menu-icon">
+                  <MenuIcon name="mail" />
+                </span>
 
-              <span className="nav-menu-label">Contact Me</span>
-            </NavLink>
-          </li>
+                <span className="nav-menu-label">Contact Me</span>
+              </NavLink>
+            </li>
+          ) : null}
         </ul>
       </div>
     </nav>

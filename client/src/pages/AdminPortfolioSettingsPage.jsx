@@ -72,6 +72,63 @@ const defaultSettings = {
     },
   },
 
+  navigation: {
+    enabled: true,
+    items: [
+      { id: "home", label: "Home", url: "/", enabled: true, order: 0 },
+      { id: "about", label: "About", url: "/about", enabled: true, order: 1 },
+      {
+        id: "skills",
+        label: "Skills",
+        url: "/skills",
+        enabled: true,
+        order: 2,
+      },
+      {
+        id: "projects",
+        label: "Projects",
+        url: "/projects",
+        enabled: true,
+        order: 3,
+      },
+      {
+        id: "experience",
+        label: "Experience",
+        url: "/experience",
+        enabled: true,
+        order: 4,
+      },
+      {
+        id: "achievements",
+        label: "Achievements",
+        url: "/achievements",
+        enabled: true,
+        order: 5,
+      },
+      {
+        id: "education",
+        label: "Education",
+        url: "/education",
+        enabled: true,
+        order: 6,
+      },
+      {
+        id: "resume",
+        label: "Resume",
+        url: "/resume",
+        enabled: true,
+        order: 7,
+      },
+      {
+        id: "contact",
+        label: "Contact",
+        url: "/contact",
+        enabled: true,
+        order: 8,
+      },
+    ],
+  },
+
   contact: {
     enabled: true,
     successMessage:
@@ -134,6 +191,77 @@ const defaultSettings = {
     },
   },
 
+  privacy: {
+    showEmail: true,
+    showPhone: true,
+    showLocation: true,
+    showSocialLinks: true,
+    allowContactForm: true,
+    showAvailability: true,
+    cookieNoticeEnabled: false,
+    privacyPolicyUrl: "",
+    termsUrl: "",
+  },
+
+  contentControls: {
+    projects: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    skills: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    experience: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    education: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    certificates: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    achievements: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    testimonials: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+    blog: {
+      manageEnabled: true,
+      reorderEnabled: true,
+      deleteConfirmationRequired: true,
+    },
+  },
+
+  controlCenter: {
+    confirmDestructiveActions: true,
+    requireSaveConfirmation: false,
+    showAdvancedControls: true,
+    auditLogEnabled: true,
+    backupBeforeReset: true,
+    maxRevisionEntries: 50,
+  },
+  footer: {
+    enabled: true,
+    copyrightText: "© {year} Rohit Kumar. All rights reserved.",
+    tagline: "FULL STACK + AI/ML DEVELOPER",
+    showSocialLinks: true,
+    showEmail: true,
+    showAdminLink: true,
+  },
   settingsVersion: 1,
 };
 
@@ -142,9 +270,14 @@ const tabs = [
   { id: "branding", label: "Branding", icon: "🎨" },
   { id: "site", label: "Website & SEO", icon: "🌐" },
   { id: "homepage", label: "Homepage", icon: "🏠" },
+  { id: "navigation", label: "Navigation", icon: "🧭" },
   { id: "contact", label: "Contact", icon: "✉️" },
   { id: "features", label: "Features", icon: "⚡" },
   { id: "integrations", label: "Integrations", icon: "🔌" },
+  { id: "privacy", label: "Privacy", icon: "🔒" },
+  { id: "content", label: "Content Management", icon: "🗂️" },
+  { id: "advanced", label: "Advanced / Control Center", icon: "⚙️" },
+  { id: "footer", label: "Footer", icon: "📌" },
 ];
 
 const sectionLabels = {
@@ -205,6 +338,14 @@ function mergeSettings(data) {
       },
     },
 
+    navigation: {
+      ...defaults.navigation,
+      ...(data?.navigation || {}),
+      items: Array.isArray(data?.navigation?.items)
+        ? data.navigation.items
+        : defaults.navigation.items,
+    },
+
     contact: {
       ...defaults.contact,
       ...(data?.contact || {}),
@@ -247,6 +388,57 @@ function mergeSettings(data) {
         ...defaults.integrations.cloudinary,
         ...(data?.integrations?.cloudinary || {}),
       },
+    },
+
+    privacy: {
+      ...defaults.privacy,
+      ...(data?.privacy || {}),
+    },
+
+    contentControls: {
+      ...defaults.contentControls,
+      ...(data?.contentControls || {}),
+      projects: {
+        ...defaults.contentControls.projects,
+        ...(data?.contentControls?.projects || {}),
+      },
+      skills: {
+        ...defaults.contentControls.skills,
+        ...(data?.contentControls?.skills || {}),
+      },
+      experience: {
+        ...defaults.contentControls.experience,
+        ...(data?.contentControls?.experience || {}),
+      },
+      education: {
+        ...defaults.contentControls.education,
+        ...(data?.contentControls?.education || {}),
+      },
+      certificates: {
+        ...defaults.contentControls.certificates,
+        ...(data?.contentControls?.certificates || {}),
+      },
+      achievements: {
+        ...defaults.contentControls.achievements,
+        ...(data?.contentControls?.achievements || {}),
+      },
+      testimonials: {
+        ...defaults.contentControls.testimonials,
+        ...(data?.contentControls?.testimonials || {}),
+      },
+      blog: {
+        ...defaults.contentControls.blog,
+        ...(data?.contentControls?.blog || {}),
+      },
+    },
+
+    controlCenter: {
+      ...defaults.controlCenter,
+      ...(data?.controlCenter || {}),
+    },
+    footer: {
+      ...defaults.footer,
+      ...(data?.footer || {}),
     },
   };
 }
@@ -400,6 +592,80 @@ function AdminPortfolioSettingsPage() {
     }));
   };
 
+  const handleAddNavigationItem = () => {
+    setSettings((current) => ({
+      ...current,
+      navigation: {
+        ...current.navigation,
+        items: [
+          ...current.navigation.items,
+          {
+            id: `custom-${Date.now()}`,
+            label: `New Link ${current.navigation.items.length + 1}`,
+            url: "/",
+            enabled: true,
+            order: current.navigation.items.length,
+          },
+        ],
+      },
+    }));
+  };
+
+  const handleNavigationChange = (index, field, value) => {
+    setSettings((current) => ({
+      ...current,
+      navigation: {
+        ...current.navigation,
+        items: current.navigation.items.map((item, itemIndex) =>
+          itemIndex === index ? { ...item, [field]: value } : item,
+        ),
+      },
+    }));
+  };
+
+  const handleRemoveNavigationItem = (index) => {
+    setSettings((current) => {
+      const items = current.navigation.items
+        .filter((_, itemIndex) => itemIndex !== index)
+        .map((item, itemIndex) => ({
+          ...item,
+          order: itemIndex,
+        }));
+
+      return {
+        ...current,
+        navigation: {
+          ...current.navigation,
+          items,
+        },
+      };
+    });
+  };
+
+  const moveNavigationItem = (index, direction) => {
+    setSettings((current) => {
+      const items = [...current.navigation.items];
+      const targetIndex = index + direction;
+
+      if (targetIndex < 0 || targetIndex >= items.length) {
+        return current;
+      }
+
+      [items[index], items[targetIndex]] = [items[targetIndex], items[index]];
+
+      return {
+        ...current,
+        navigation: {
+          ...current.navigation,
+          items: items.map((item, itemIndex) => ({
+            ...item,
+            order: itemIndex,
+          })),
+        },
+      };
+    });
+  };
+
   const handleAddCategory = () => {
     setSettings((current) => ({
       ...current,
@@ -483,12 +749,17 @@ function AdminPortfolioSettingsPage() {
         site: settings.site,
         branding: settings.branding,
         homepage: settings.homepage,
+        navigation: settings.navigation,
         contact: settings.contact,
         seo: settings.seo,
         features: settings.features,
         integrations: settings.integrations,
+        privacy: settings.privacy,
+        contentControls: settings.contentControls,
+        controlCenter: settings.controlCenter,
+        footer: settings.footer,
       };
-
+      console.log("HOMEPAGE SAVE PAYLOAD:", payload.homepage);
       const response = await updatePortfolioSettings(payload, token);
 
       if (response.settings) {
@@ -660,9 +931,19 @@ function AdminPortfolioSettingsPage() {
                                   "Logo, brand identity and visual style",
                                 site: "Website configuration and SEO",
                                 homepage: "Hero, CTA and section visibility",
+                                navigation:
+                                  "Manage public navbar links, visibility and display order",
                                 contact: "Contact form and spam protection",
                                 features: "Portfolio feature controls",
                                 integrations: "GitHub, LinkedIn and analytics",
+                                privacy:
+                                  "Public personal-data visibility and privacy controls",
+                                content:
+                                  "Manage content permissions and safeguards",
+                                advanced:
+                                  "Safeguards, revisions and advanced controls",
+                                footer:
+                                  "Manage public footer visibility and content",
                               }[tab.id]
                             }
                           </small>
@@ -1583,6 +1864,194 @@ function AdminPortfolioSettingsPage() {
               )}
 
               {/* =====================================================
+                  NAVIGATION
+              ====================================================== */}
+
+              {activeTab === "navigation" && (
+                <>
+                  <section className="settings-card">
+                    <CardHeader
+                      icon="🧭"
+                      title="Navigation Control"
+                      description="Manage the public navbar, link visibility and display order without changing the actual portfolio pages."
+                    />
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Navigation Enabled",
+                        "Show the configured navigation links on the public website.",
+                        settings.navigation.enabled,
+                        (value) =>
+                          updateSectionField("navigation", "enabled", value),
+                      )}
+                    </div>
+                  </section>
+
+                  <section className="settings-card">
+                    <div className="settings-card-header settings-card-header-row">
+                      <CardHeader
+                        icon="🔗"
+                        title="Navigation Items"
+                        description="Edit labels, URLs, visibility and order of public navigation links."
+                      />
+
+                      <button
+                        type="button"
+                        className="settings-secondary-button"
+                        onClick={handleAddNavigationItem}
+                      >
+                        + Add Navigation Item
+                      </button>
+                    </div>
+
+                    {settings.navigation.items.length === 0 ? (
+                      <div className="settings-empty">
+                        <span>🧭</span>
+                        <p>No navigation items configured yet.</p>
+
+                        <button
+                          type="button"
+                          className="settings-secondary-button"
+                          onClick={handleAddNavigationItem}
+                        >
+                          Add First Item
+                        </button>
+                      </div>
+                    ) : (
+                      <div className="navigation-items-list">
+                        {settings.navigation.items.map((item, index) => (
+                          <div
+                            className="navigation-item-row"
+                            key={`${item.id || "navigation"}-${index}`}
+                          >
+                            <div className="navigation-item-number">
+                              {index + 1}
+                            </div>
+
+                            <Field label="ID">
+                              <input
+                                type="text"
+                                value={item.id || ""}
+                                onChange={(e) =>
+                                  handleNavigationChange(
+                                    index,
+                                    "id",
+                                    e.target.value,
+                                  )
+                                }
+                                placeholder="projects"
+                              />
+                            </Field>
+
+                            <Field label="Label">
+                              <input
+                                type="text"
+                                value={item.label || ""}
+                                onChange={(e) =>
+                                  handleNavigationChange(
+                                    index,
+                                    "label",
+                                    e.target.value,
+                                  )
+                                }
+                                placeholder="Projects"
+                              />
+                            </Field>
+
+                            <Field label="URL">
+                              <input
+                                type="text"
+                                value={item.url || ""}
+                                onChange={(e) =>
+                                  handleNavigationChange(
+                                    index,
+                                    "url",
+                                    e.target.value,
+                                  )
+                                }
+                                placeholder="/projects"
+                              />
+                            </Field>
+
+                            <Field label="Order">
+                              <input
+                                type="number"
+                                min="0"
+                                value={
+                                  Number.isFinite(Number(item.order))
+                                    ? item.order
+                                    : index
+                                }
+                                onChange={(e) =>
+                                  handleNavigationChange(
+                                    index,
+                                    "order",
+                                    Math.max(0, Number(e.target.value) || 0),
+                                  )
+                                }
+                              />
+                            </Field>
+
+                            <div className="navigation-item-actions">
+                              <label className="social-enabled">
+                                <input
+                                  type="checkbox"
+                                  checked={item.enabled !== false}
+                                  onChange={(e) =>
+                                    handleNavigationChange(
+                                      index,
+                                      "enabled",
+                                      e.target.checked,
+                                    )
+                                  }
+                                />
+                                Enabled
+                              </label>
+
+                              <div className="navigation-move-actions">
+                                <button
+                                  type="button"
+                                  className="navigation-action-button"
+                                  onClick={() => moveNavigationItem(index, -1)}
+                                  disabled={index === 0}
+                                  aria-label={`Move ${item.label || "item"} up`}
+                                >
+                                  ↑
+                                </button>
+
+                                <button
+                                  type="button"
+                                  className="navigation-action-button"
+                                  onClick={() => moveNavigationItem(index, 1)}
+                                  disabled={
+                                    index ===
+                                    settings.navigation.items.length - 1
+                                  }
+                                  aria-label={`Move ${item.label || "item"} down`}
+                                >
+                                  ↓
+                                </button>
+
+                                <button
+                                  type="button"
+                                  className="settings-delete-button"
+                                  onClick={() =>
+                                    handleRemoveNavigationItem(index)
+                                  }
+                                >
+                                  Remove
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </section>
+                </>
+              )}
+
+              {/* =====================================================
                   CONTACT
               ====================================================== */}
 
@@ -2044,6 +2513,425 @@ function AdminPortfolioSettingsPage() {
                       server-side environment variables or securely managed
                       backend secrets.
                     </p>
+                  </section>
+                </>
+              )}
+
+              {/* =====================================================
+                  PRIVACY
+              ====================================================== */}
+
+              {activeTab === "privacy" && (
+                <section className="settings-card">
+                  <CardHeader
+                    icon="🔒"
+                    title="Privacy & Visibility"
+                    description="Control which personal information and public contact options are visible on your portfolio."
+                  />
+
+                  <div className="settings-grid">
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Show Email",
+                        "Display your email address on the public portfolio.",
+                        settings.privacy.showEmail,
+                        (value) =>
+                          updateSectionField("privacy", "showEmail", value),
+                      )}
+                    </div>
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Show Phone",
+                        "Display your phone number on the public portfolio.",
+                        settings.privacy.showPhone,
+                        (value) =>
+                          updateSectionField("privacy", "showPhone", value),
+                      )}
+                    </div>
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Show Location",
+                        "Display your location on the public portfolio.",
+                        settings.privacy.showLocation,
+                        (value) =>
+                          updateSectionField("privacy", "showLocation", value),
+                      )}
+                    </div>
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Show Social Links",
+                        "Display your social media links publicly.",
+                        settings.privacy.showSocialLinks,
+                        (value) =>
+                          updateSectionField(
+                            "privacy",
+                            "showSocialLinks",
+                            value,
+                          ),
+                      )}
+                    </div>
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Allow Contact Form",
+                        "Allow visitors to submit messages through the contact form.",
+                        settings.privacy.allowContactForm,
+                        (value) =>
+                          updateSectionField(
+                            "privacy",
+                            "allowContactForm",
+                            value,
+                          ),
+                      )}
+                    </div>
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Show Availability",
+                        "Display your availability status publicly.",
+                        settings.privacy.showAvailability,
+                        (value) =>
+                          updateSectionField(
+                            "privacy",
+                            "showAvailability",
+                            value,
+                          ),
+                      )}
+                    </div>
+
+                    <div className="settings-field settings-field-full">
+                      {renderToggle(
+                        "Cookie Notice",
+                        "Enable the cookie/privacy notice on the public website.",
+                        settings.privacy.cookieNoticeEnabled,
+                        (value) =>
+                          updateSectionField(
+                            "privacy",
+                            "cookieNoticeEnabled",
+                            value,
+                          ),
+                      )}
+                    </div>
+
+                    <Field label="Privacy Policy URL" full>
+                      <input
+                        type="url"
+                        value={settings.privacy.privacyPolicyUrl}
+                        onChange={(e) =>
+                          updateSectionField(
+                            "privacy",
+                            "privacyPolicyUrl",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="https://example.com/privacy"
+                      />
+                    </Field>
+
+                    <Field label="Terms & Conditions URL" full>
+                      <input
+                        type="url"
+                        value={settings.privacy.termsUrl}
+                        onChange={(e) =>
+                          updateSectionField(
+                            "privacy",
+                            "termsUrl",
+                            e.target.value,
+                          )
+                        }
+                        placeholder="https://example.com/terms"
+                      />
+                    </Field>
+                  </div>
+                </section>
+              )}
+
+              {/* =====================================================
+                  CONTENT MANAGEMENT
+              ====================================================== */}
+
+              {activeTab === "content" && (
+                <section className="settings-card">
+                  <CardHeader
+                    icon="🗂️"
+                    title="Content Management Controls"
+                    description="Control which content modules can be managed, reordered and deleted from the admin panel."
+                  />
+
+                  <div className="settings-grid">
+                    {Object.entries({
+                      projects: "Projects",
+                      skills: "Skills",
+                      experience: "Experience",
+                      education: "Education",
+                      certificates: "Certificates",
+                      achievements: "Achievements",
+                      testimonials: "Testimonials",
+                      blog: "Blog",
+                    }).map(([key, label]) => (
+                      <div
+                        className="settings-field settings-field-full"
+                        key={key}
+                      >
+                        <div className="settings-card" style={{ margin: 0 }}>
+                          <div className="settings-card-header settings-card-header-row">
+                            <div>
+                              <h3>{label}</h3>
+                              <p>
+                                Configure admin permissions and safeguards for{" "}
+                                {label.toLowerCase()} content.
+                              </p>
+                            </div>
+                          </div>
+
+                          <div className="settings-inline-toggles">
+                            {renderToggle(
+                              "Manage Enabled",
+                              `Allow ${label.toLowerCase()} content to be managed from the admin panel.`,
+                              settings.contentControls[key].manageEnabled,
+                              (value) =>
+                                updateNestedField(
+                                  "contentControls",
+                                  key,
+                                  "manageEnabled",
+                                  value,
+                                ),
+                            )}
+
+                            {renderToggle(
+                              "Reorder Enabled",
+                              `Allow ${label.toLowerCase()} items to be reordered.`,
+                              settings.contentControls[key].reorderEnabled,
+                              (value) =>
+                                updateNestedField(
+                                  "contentControls",
+                                  key,
+                                  "reorderEnabled",
+                                  value,
+                                ),
+                            )}
+
+                            {renderToggle(
+                              "Delete Confirmation",
+                              `Require confirmation before deleting ${label.toLowerCase()} content.`,
+                              settings.contentControls[key]
+                                .deleteConfirmationRequired,
+                              (value) =>
+                                updateNestedField(
+                                  "contentControls",
+                                  key,
+                                  "deleteConfirmationRequired",
+                                  value,
+                                ),
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </section>
+              )}
+
+              {/* =====================================================
+                  ADVANCED / CONTROL CENTER
+              ====================================================== */}
+
+              {activeTab === "advanced" && (
+                <>
+                  <section className="settings-card">
+                    <CardHeader
+                      icon="⚙️"
+                      title="Control Center"
+                      description="Configure safeguards, revision history and advanced administrative controls."
+                    />
+
+                    <div className="settings-grid">
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Confirm Destructive Actions",
+                          "Require confirmation before destructive administrative actions.",
+                          settings.controlCenter.confirmDestructiveActions,
+                          (value) =>
+                            updateSectionField(
+                              "controlCenter",
+                              "confirmDestructiveActions",
+                              value,
+                            ),
+                        )}
+                      </div>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Require Save Confirmation",
+                          "Ask for confirmation before saving portfolio settings.",
+                          settings.controlCenter.requireSaveConfirmation,
+                          (value) =>
+                            updateSectionField(
+                              "controlCenter",
+                              "requireSaveConfirmation",
+                              value,
+                            ),
+                        )}
+                      </div>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Show Advanced Controls",
+                          "Display advanced administrative controls in the control center.",
+                          settings.controlCenter.showAdvancedControls,
+                          (value) =>
+                            updateSectionField(
+                              "controlCenter",
+                              "showAdvancedControls",
+                              value,
+                            ),
+                        )}
+                      </div>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Audit Log Enabled",
+                          "Keep an audit trail for supported portfolio settings changes.",
+                          settings.controlCenter.auditLogEnabled,
+                          (value) =>
+                            updateSectionField(
+                              "controlCenter",
+                              "auditLogEnabled",
+                              value,
+                            ),
+                        )}
+                      </div>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Backup Before Reset",
+                          "Create a backup/revision before supported reset operations.",
+                          settings.controlCenter.backupBeforeReset,
+                          (value) =>
+                            updateSectionField(
+                              "controlCenter",
+                              "backupBeforeReset",
+                              value,
+                            ),
+                        )}
+                      </div>
+
+                      <Field label="Maximum Revision Entries">
+                        <input
+                          type="number"
+                          min="1"
+                          max="500"
+                          value={settings.controlCenter.maxRevisionEntries}
+                          onChange={(event) =>
+                            updateSectionField(
+                              "controlCenter",
+                              "maxRevisionEntries",
+                              Math.min(
+                                500,
+                                Math.max(1, Number(event.target.value) || 1),
+                              ),
+                            )
+                          }
+                        />
+                      </Field>
+                    </div>
+                  </section>
+                </>
+              )}
+
+              {/* =====================================================
+                  FOOTER
+              ====================================================== */}
+
+              {activeTab === "footer" && (
+                <>
+                  <section className="settings-card">
+                    <CardHeader
+                      icon="📌"
+                      title="Footer"
+                      description="Control the public website footer and the information displayed inside it."
+                    />
+
+                    <div className="settings-grid">
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Footer Enabled",
+                          "Show the footer on the public website.",
+                          settings.footer.enabled,
+                          (value) =>
+                            updateSectionField("footer", "enabled", value),
+                        )}
+                      </div>
+
+                      <Field label="Copyright Text">
+                        <input
+                          type="text"
+                          value={settings.footer.copyrightText}
+                          onChange={(event) =>
+                            updateSectionField(
+                              "footer",
+                              "copyrightText",
+                              event.target.value,
+                            )
+                          }
+                        />
+                      </Field>
+
+                      <Field label="Footer Tagline">
+                        <input
+                          type="text"
+                          value={settings.footer.tagline}
+                          onChange={(event) =>
+                            updateSectionField(
+                              "footer",
+                              "tagline",
+                              event.target.value,
+                            )
+                          }
+                        />
+                      </Field>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Show Social Links",
+                          "Display social media links in the footer.",
+                          settings.footer.showSocialLinks,
+                          (value) =>
+                            updateSectionField(
+                              "footer",
+                              "showSocialLinks",
+                              value,
+                            ),
+                        )}
+                      </div>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Show Email",
+                          "Display the email address in the footer.",
+                          settings.footer.showEmail,
+                          (value) =>
+                            updateSectionField("footer", "showEmail", value),
+                        )}
+                      </div>
+
+                      <div className="settings-field settings-field-full">
+                        {renderToggle(
+                          "Show Admin Link",
+                          "Display the admin login link in the footer.",
+                          settings.footer.showAdminLink,
+                          (value) =>
+                            updateSectionField(
+                              "footer",
+                              "showAdminLink",
+                              value,
+                            ),
+                        )}
+                      </div>
+                    </div>
                   </section>
                 </>
               )}
@@ -2859,6 +3747,72 @@ function AdminPortfolioSettingsPage() {
           font-weight: 700;
         }
 
+        .navigation-items-list {
+          display: flex;
+          flex-direction: column;
+          gap: 14px;
+        }
+
+        .navigation-item-row {
+          display: grid;
+          grid-template-columns: 32px 1fr 1fr 2fr 90px auto;
+          gap: 12px;
+          align-items: end;
+          padding: 16px;
+          border: 1px solid #202c3b;
+          border-radius: 12px;
+          background: #0b1119;
+        }
+
+        .navigation-item-number {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 30px;
+          height: 30px;
+          border-radius: 8px;
+          background: #172231;
+          color: #93a1b5;
+          font-size: 12px;
+          font-weight: 800;
+        }
+
+        .navigation-item-actions {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 9px;
+        }
+
+        .navigation-move-actions {
+          display: flex;
+          align-items: center;
+          gap: 6px;
+          flex-wrap: wrap;
+        }
+
+        .navigation-action-button {
+          width: 30px;
+          height: 30px;
+          padding: 0;
+          border: 1px solid #273548;
+          border-radius: 7px;
+          background: #172231;
+          color: #d9e3ee;
+          font-size: 14px;
+          font-weight: 800;
+          cursor: pointer;
+        }
+
+        .navigation-action-button:hover:not(:disabled) {
+          background: #1c2a3b;
+        }
+
+        .navigation-action-button:disabled {
+          opacity: 0.35;
+          cursor: not-allowed;
+        }
+
         .visibility-grid {
           display: grid;
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -3027,6 +3981,24 @@ function AdminPortfolioSettingsPage() {
           }
         }
 
+        @media (max-width: 1100px) {
+          .navigation-item-row {
+            grid-template-columns: 32px 1fr 1fr;
+          }
+
+          .navigation-item-row > .settings-field:nth-child(4) {
+            grid-column: 2 / -1;
+          }
+
+          .navigation-item-row > .settings-field:nth-child(5) {
+            grid-column: 2;
+          }
+
+          .navigation-item-actions {
+            grid-column: 3;
+          }
+        }
+
         @media (max-width: 850px) {
           .settings-layout {
             width: 100%;
@@ -3034,6 +4006,28 @@ function AdminPortfolioSettingsPage() {
         }
 
         @media (max-width: 760px) {
+          .navigation-item-row {
+            grid-template-columns: 32px 1fr;
+          }
+
+          .navigation-item-row > .settings-field:nth-child(4),
+          .navigation-item-row > .settings-field:nth-child(5),
+          .navigation-item-actions {
+            grid-column: 2;
+          }
+
+          .navigation-item-actions {
+            align-items: stretch;
+          }
+
+          .navigation-move-actions {
+            width: 100%;
+          }
+
+          .navigation-move-actions .settings-delete-button {
+            flex: 1;
+          }
+
           .admin-main {
             padding: 20px 14px;
           }

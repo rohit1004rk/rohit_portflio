@@ -1,4 +1,6 @@
+import AnalyticsOverview from "../components/admin/AnalyticsOverview.jsx";
 import AdminSidebar from "../components/admin/AdminSidebar.jsx";
+import ResumeManagement from "../components/admin/ResumeManagement.jsx";
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import {
@@ -40,14 +42,15 @@ function AdminDashboardPage() {
     description: "",
     file: null,
   });
-
   useEffect(() => {
     if (!token) {
       navigate("/admin/login");
       return;
     }
 
-    const load = async () => {
+    let isMounted = true;
+
+    const load = async (isInitialLoad = false) => {
       try {
         const [statsRes, messagesRes, chatsRes, certificatesRes] =
           await Promise.all([
@@ -57,11 +60,19 @@ function AdminDashboardPage() {
             fetchCertificates(),
           ]);
 
+        if (!isMounted) return;
+
         setStats(statsRes);
         setMessages(messagesRes);
         setChats(chatsRes);
         setCertificates(Array.isArray(certificatesRes) ? certificatesRes : []);
+
+        if (isInitialLoad) {
+          setLoading(false);
+        }
       } catch (err) {
+        if (!isMounted) return;
+
         if (err.response?.status === 401 || err.response?.status === 403) {
           localStorage.removeItem("adminToken");
           localStorage.removeItem("adminUser");
@@ -70,13 +81,26 @@ function AdminDashboardPage() {
           setError(
             err.response?.data?.message || "Could not load dashboard data.",
           );
+
+          if (isInitialLoad) {
+            setLoading(false);
+          }
         }
-      } finally {
-        setLoading(false);
       }
     };
 
-    load();
+    // Initial dashboard load.
+    load(true);
+
+    // Refresh dashboard data every 30 seconds.
+    const refreshInterval = setInterval(() => {
+      load(false);
+    }, 30000);
+
+    return () => {
+      isMounted = false;
+      clearInterval(refreshInterval);
+    };
   }, [token, navigate]);
 
   const handleRead = async (id) => {
@@ -316,7 +340,8 @@ function AdminDashboardPage() {
               </div>
             </div>
           )}
-
+          <AnalyticsOverview analytics={stats?.analytics} />
+          <ResumeManagement />
           {/* ── Certificates CMS ─────────────────────────── */}
           <div className="admin-panel">
             <h2>📜 Certificates</h2>

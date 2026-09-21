@@ -1,8 +1,9 @@
+import { fetchCurrentResume } from "../api/api.js";
 import PageHero from "../components/ui/PageHero.jsx";
 import { useDocumentTitle } from "../hooks/useDocumentTitle.js";
 import { useReveal } from "../hooks/useReveal.js";
 
-const RESUME_FILE = "/rohit-kumar-resume.pdf";
+fetchCurrentResume();
 
 function ResumePage() {
   useDocumentTitle("Resume");

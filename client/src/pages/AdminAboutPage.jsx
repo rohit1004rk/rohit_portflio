@@ -1516,11 +1516,95 @@ const responsiveStyles = `
       grid-template-columns: 1fr;
     }
   }
+@media (max-width: 680px) {
+  .about-admin-page {
+    display: block;
+    width: 100%;
+    min-width: 0;
+  }
 
-  @media (max-width: 680px) {
-    .about-admin-main {
-      padding: 18px 14px 30px;
-    }
+  .about-admin-page .admin-sidebar {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    bottom: auto;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    height: auto;
+    max-height: none;
+    border-right: 0;
+    border-bottom: 1px solid rgba(148, 163, 184, 0.12);
+  }
+
+  .about-admin-page .admin-sidebar-nav {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 12px;
+    box-sizing: border-box;
+  }
+
+  .about-admin-page .admin-sidebar-link,
+  .about-admin-page .admin-sidebar-logout {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+  }
+
+  .about-admin-main {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+    margin-left: 0;
+    padding: 18px 14px 30px;
+    box-sizing: border-box;
+    overflow-x: hidden;
+  }
+
+  .about-section {
+    padding: 16px;
+    border-radius: 13px;
+  }
+
+  .about-section-header {
+    flex-direction: column;
+    gap: 13px;
+  }
+
+  .about-section-header > .about-switch {
+    align-self: flex-start;
+  }
+
+  .about-card-fields {
+    grid-template-columns: 1fr;
+  }
+
+  .about-card-fields .about-field-full {
+    grid-column: auto;
+  }
+
+  .about-focus-card-footer,
+  .about-bottom-actions {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .about-remove-button,
+  .about-save-button-bottom {
+    width: 100%;
+  }
+
+  .about-admin-heading h1 {
+    font-size: 28px;
+  }
+
+  .about-admin-heading p {
+    font-size: 12px;
+  }
+}
 
     .about-section {
       padding: 16px;

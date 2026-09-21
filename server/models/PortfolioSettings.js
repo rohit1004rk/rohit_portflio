@@ -650,34 +650,66 @@ const featuresSchema = new mongoose.Schema(
 const integrationsSchema = new mongoose.Schema(
   {
     github: {
-      type: String,
-      trim: true,
-      maxlength: 1000,
-      default: "",
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+
+      username: {
+        type: String,
+        trim: true,
+        maxlength: 100,
+        default: "",
+      },
     },
+
     linkedin: {
-      type: String,
-      trim: true,
-      maxlength: 1000,
-      default: "",
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+
+      profileUrl: {
+        type: String,
+        trim: true,
+        maxlength: 500,
+        default: "",
+      },
     },
+
     googleAnalytics: {
-      type: String,
-      trim: true,
-      maxlength: 500,
-      default: "",
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+
+      measurementId: {
+        type: String,
+        trim: true,
+        maxlength: 100,
+        default: "",
+      },
     },
+
     googleSearchConsole: {
-      type: String,
-      trim: true,
-      maxlength: 1000,
-      default: "",
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
+
+      verificationCode: {
+        type: String,
+        trim: true,
+        maxlength: 500,
+        default: "",
+      },
     },
+
     cloudinary: {
-      type: String,
-      trim: true,
-      maxlength: 1000,
-      default: "",
+      enabled: {
+        type: Boolean,
+        default: false,
+      },
     },
   },
   { _id: false },
