@@ -1,5 +1,7 @@
 import "./CertificateManagement.css";
+
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import {
   fetchCertificates,
   uploadCertificate,
@@ -36,22 +38,27 @@ const normalizeCertificate = (certificate, index = 0) => ({
   category: certificate?.category || "Certification",
   completionDate: certificate?.completionDate || "",
   description: certificate?.description || "",
+
   fileUrl:
     certificate?.fileUrl ||
     certificate?.url ||
     certificate?.certificateUrl ||
     "",
+
   originalName:
     certificate?.originalName ||
     certificate?.fileName ||
     certificate?.filename ||
     "",
+
   mimeType: certificate?.mimeType || "",
   fileSize: Number(certificate?.fileSize || 0),
   isActive: certificate?.isActive !== false,
+
   order: Number.isFinite(Number(certificate?.order))
     ? Number(certificate.order)
     : index,
+
   createdAt: certificate?.createdAt || null,
   updatedAt: certificate?.updatedAt || null,
 });
@@ -160,6 +167,7 @@ function CertificateManagement() {
 
     setForm((current) => ({
       ...current,
+
       [name]:
         type === "checkbox"
           ? checked
@@ -486,26 +494,77 @@ function CertificateManagement() {
     );
   };
 
+  /*
+   * ============================================================
+   * PREVIEW
+   * ============================================================
+   *
+   * IMPORTANT:
+   * Do NOT use http://localhost:5000 here.
+   *
+   * Relative /api URLs work for:
+   *
+   * Local:
+   * http://localhost:5173
+   *        ↓
+   * /api
+   *        ↓
+   * Vite proxy
+   *        ↓
+   * http://localhost:5000
+   *
+   * Render:
+   * https://rohit-portflio.onrender.com
+   *        ↓
+   * /api
+   *        ↓
+   * Render backend
+   *
+   * This also works when the admin panel is opened
+   * from a mobile browser.
+   */
+
   const getPreviewUrl = (certificate) => {
     if (!certificate) {
       return "";
     }
 
+    /*
+     * If backend already gives a complete URL,
+     * use that URL directly.
+     */
     if (certificate.fileUrl) {
       if (/^https?:\/\//i.test(certificate.fileUrl)) {
         return certificate.fileUrl;
       }
 
+      /*
+       * Backend-relative URL.
+       *
+       * Example:
+       * /uploads/certificate.pdf
+       *
+       * Keep it relative so the current
+       * frontend/backend host is used.
+       */
       if (certificate.fileUrl.startsWith("/")) {
         return certificate.fileUrl;
       }
 
-      return `http://localhost:5000/${certificate.fileUrl}`;
+      /*
+       * If backend returns a path without
+       * a leading slash, normalize it.
+       */
+      return `/api/${certificate.fileUrl.replace(/^\/+/, "")}`;
     }
 
-    return certificate._id
-      ? `http://localhost:5000/api/certificates/${certificate._id}/file`
-      : "";
+    /*
+     * Main certificate file endpoint.
+     *
+     * IMPORTANT:
+     * Relative URL — no localhost.
+     */
+    return certificate._id ? `/api/certificates/${certificate._id}/file` : "";
   };
 
   const handlePreview = (certificate) => {
