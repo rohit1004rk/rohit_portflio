@@ -1,4 +1,6 @@
 import nodemailer from "nodemailer";
+import dns from "dns/promises";
+import net from "net";
 
 /**
  * Mail service.
@@ -12,21 +14,96 @@ export const isMailConfigured = () =>
     process.env.SMTP_USER && process.env.SMTP_PASS && process.env.MAIL_TO,
   );
 
-const createTransporter = () =>
-  nodemailer.createTransport({
-    host: process.env.SMTP_HOST || "smtp.gmail.com",
-    port: Number(process.env.SMTP_PORT) || 587,
-    secure: Number(process.env.SMTP_PORT) === 465,
+/**
+ * Resolve the configured SMTP hostname to an IPv4 address.
+ *
+ * Render production was resolving smtp.gmail.com to an IPv6 address,
+ * but the runtime could not reach that IPv6 network:
+ *
+ * ENETUNREACH <IPv6>:587
+ *
+ * We therefore resolve only an IPv4 address before creating the
+ * Nodemailer transporter.
+ *
+ * IMPORTANT:
+ * - We do NOT hard-code Google's IP address.
+ * - DNS resolution happens dynamically.
+ * - If SMTP_HOST is already an IPv4 address, it is used directly.
+ * - tls.servername keeps the original hostname for TLS/SNI and
+ *   certificate validation.
+ */
+const resolveSmtpIpv4 = async (smtpHost) => {
+  const host = String(smtpHost || "").trim();
+
+  if (!host) {
+    throw new Error("SMTP_HOST is not configured.");
+  }
+
+  // If the configured host is already an IPv4 address,
+  // no DNS lookup is necessary.
+  if (net.isIP(host) === 4) {
+    return {
+      host,
+      servername: undefined,
+    };
+  }
+
+  // IPv6 SMTP hosts are intentionally not used here because
+  // the current Render environment cannot reach the IPv6 route.
+  if (net.isIP(host) === 6) {
+    throw new Error(
+      "SMTP_HOST is configured as an IPv6 address. An IPv4 SMTP hostname/address is required.",
+    );
+  }
+
+  const ipv4Addresses = await dns.resolve4(host);
+
+  if (!Array.isArray(ipv4Addresses) || ipv4Addresses.length === 0) {
+    throw new Error(`No IPv4 address found for SMTP host: ${host}`);
+  }
+
+  return {
+    host: ipv4Addresses[0],
+    servername: host,
+  };
+};
+
+/**
+ * Create the SMTP transporter.
+ *
+ * The SMTP hostname is resolved to IPv4 before connecting.
+ * This prevents Render from attempting the unavailable IPv6
+ * Gmail route observed in production logs.
+ */
+const createTransporter = async () => {
+  const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
+  const smtpPort = Number(process.env.SMTP_PORT) || 587;
+
+  const resolved = await resolveSmtpIpv4(smtpHost);
+
+  return nodemailer.createTransport({
+    host: resolved.host,
+    port: smtpPort,
+    secure: smtpPort === 465,
 
     auth: {
       user: process.env.SMTP_USER,
       pass: process.env.SMTP_PASS,
     },
 
+    ...(resolved.servername
+      ? {
+          tls: {
+            servername: resolved.servername,
+          },
+        }
+      : {}),
+
     connectionTimeout: 15000,
     greetingTimeout: 15000,
     dnsTimeout: 10000,
   });
+};
 
 /**
  * Existing contact-form email notification.
@@ -44,7 +121,7 @@ export const sendContactNotification = async ({
   }
 
   try {
-    const transporter = createTransporter();
+    const transporter = await createTransporter();
 
     await transporter.sendMail({
       from: `"Rohit Kumar | Portfolio" <${process.env.SMTP_USER}>`,
@@ -127,7 +204,7 @@ export const sendPasswordResetEmail = async ({ email, resetUrl }) => {
   }
 
   try {
-    const transporter = createTransporter();
+    const transporter = await createTransporter();
 
     await transporter.sendMail({
       from: `"Rohit Kumar | Admin Security" <${process.env.SMTP_USER}>`,
