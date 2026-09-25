@@ -1,113 +1,100 @@
-import nodemailer from "nodemailer";
-import dns from "dns/promises";
-import net from "net";
+import { Resend } from "resend";
 
 /**
  * Mail service.
- * SMTP credentials come from environment variables only.
  *
- * Contact message is already saved in MongoDB before email is sent.
+ * Production email delivery uses Resend HTTPS API.
+ * This avoids Render's outbound SMTP port restrictions.
+ *
+ * Required environment variables:
+ *
+ * RESEND_API_KEY=your_resend_api_key
+ * RESEND_FROM=Rohit Kumar <your-verified-email@rohitportfolio.in>
+ * MAIL_TO=your_email@gmail.com
+ *
+ * Contact messages are already saved in MongoDB before email is sent.
  * Therefore, email failure does not remove the message from Admin Panel.
  */
-export const isMailConfigured = () =>
-  Boolean(
-    process.env.SMTP_USER && process.env.SMTP_PASS && process.env.MAIL_TO,
-  );
 
-/**
- * Resolve the configured SMTP hostname to an IPv4 address.
- *
- * Render production was resolving smtp.gmail.com to an IPv6 address,
- * but the runtime could not reach that IPv6 network:
- *
- * ENETUNREACH <IPv6>:587
- *
- * We therefore resolve only an IPv4 address before creating the
- * Nodemailer transporter.
- *
- * IMPORTANT:
- * - We do NOT hard-code Google's IP address.
- * - DNS resolution happens dynamically.
- * - If SMTP_HOST is already an IPv4 address, it is used directly.
- * - tls.servername keeps the original hostname for TLS/SNI and
- *   certificate validation.
- */
-const resolveSmtpIpv4 = async (smtpHost) => {
-  const host = String(smtpHost || "").trim();
+const getResendClient = () => {
+  const apiKey = String(process.env.RESEND_API_KEY || "").trim();
 
-  if (!host) {
-    throw new Error("SMTP_HOST is not configured.");
+  if (!apiKey) {
+    return null;
   }
 
-  // If the configured host is already an IPv4 address,
-  // no DNS lookup is necessary.
-  if (net.isIP(host) === 4) {
-    return {
-      host,
-      servername: undefined,
-    };
-  }
+  return new Resend(apiKey);
+};
 
-  // IPv6 SMTP hosts are intentionally not used here because
-  // the current Render environment cannot reach the IPv6 route.
-  if (net.isIP(host) === 6) {
-    throw new Error(
-      "SMTP_HOST is configured as an IPv6 address. An IPv4 SMTP hostname/address is required.",
-    );
-  }
+const getSenderAddress = () => {
+  const sender = String(process.env.RESEND_FROM || "").trim();
 
-  const ipv4Addresses = await dns.resolve4(host);
-
-  if (!Array.isArray(ipv4Addresses) || ipv4Addresses.length === 0) {
-    throw new Error(`No IPv4 address found for SMTP host: ${host}`);
-  }
-
-  return {
-    host: ipv4Addresses[0],
-    servername: host,
-  };
+  return sender || null;
 };
 
 /**
- * Create the SMTP transporter.
+ * Check whether Resend email delivery is configured.
  *
- * The SMTP hostname is resolved to IPv4 before connecting.
- * This prevents Render from attempting the unavailable IPv6
- * Gmail route observed in production logs.
+ * We intentionally keep MAIL_TO because the Contact Us notification
+ * must continue going to the portfolio owner's configured email.
  */
-const createTransporter = async () => {
-  const smtpHost = process.env.SMTP_HOST || "smtp.gmail.com";
-  const smtpPort = Number(process.env.SMTP_PORT) || 587;
+export const isMailConfigured = () =>
+  Boolean(
+    process.env.RESEND_API_KEY && getSenderAddress() && process.env.MAIL_TO,
+  );
 
-  const resolved = await resolveSmtpIpv4(smtpHost);
+/**
+ * Send an email through Resend.
+ *
+ * This is the common internal helper used by both:
+ * - Contact Us notification
+ * - Admin password reset
+ */
+const sendEmail = async ({ from, to, subject, text, html, replyTo }) => {
+  const resend = getResendClient();
 
-  return nodemailer.createTransport({
-    host: resolved.host,
-    port: smtpPort,
-    secure: smtpPort === 465,
+  if (!resend) {
+    throw new Error("RESEND_API_KEY is not configured.");
+  }
 
-    auth: {
-      user: process.env.SMTP_USER,
-      pass: process.env.SMTP_PASS,
-    },
+  if (!from) {
+    throw new Error("RESEND_FROM is not configured.");
+  }
 
-    ...(resolved.servername
-      ? {
-          tls: {
-            servername: resolved.servername,
-          },
-        }
-      : {}),
+  if (!to) {
+    throw new Error("Email recipient is not configured.");
+  }
 
-    connectionTimeout: 15000,
-    greetingTimeout: 15000,
-    dnsTimeout: 10000,
-  });
+  const payload = {
+    from,
+    to: [to],
+    subject,
+    text,
+    html,
+  };
+
+  if (replyTo) {
+    payload.replyTo = replyTo;
+  }
+
+  const { data, error } = await resend.emails.send(payload);
+
+  if (error) {
+    throw new Error(error.message || "Resend email delivery failed.");
+  }
+
+  if (!data?.id) {
+    throw new Error("Resend did not return an email ID.");
+  }
+
+  return data;
 };
 
 /**
  * Existing contact-form email notification.
- * DO NOT remove this function because messageController.js uses it.
+ *
+ * DO NOT remove this function because
+ * messageController.js uses it.
  */
 export const sendContactNotification = async ({
   name,
@@ -116,17 +103,20 @@ export const sendContactNotification = async ({
   message,
 }) => {
   if (!isMailConfigured()) {
-    console.warn("Email notification skipped: SMTP is not configured.");
+    console.warn("Email notification skipped: Resend is not configured.");
+
     return false;
   }
 
   try {
-    const transporter = await createTransporter();
+    const sender = getSenderAddress();
 
-    await transporter.sendMail({
-      from: `"Rohit Kumar | Portfolio" <${process.env.SMTP_USER}>`,
+    const result = await sendEmail({
+      from: sender,
       to: process.env.MAIL_TO,
+
       replyTo: email,
+
       subject: `New Portfolio Message from ${name}`,
 
       text: `
@@ -170,6 +160,7 @@ Reply directly to this email to respond to ${name}.
             border-left: 4px solid #333;
           ">
             <strong>Message:</strong>
+
             <p style="white-space: pre-wrap; margin-bottom: 0;">
               ${String(message).replace(/\n/g, "<br />")}
             </p>
@@ -182,11 +173,12 @@ Reply directly to this email to respond to ${name}.
       `,
     });
 
-    console.log(`✅ Gmail notification sent for message from ${name}`);
+    console.log(`✅ Resend contact notification sent. Email ID: ${result.id}`);
 
     return true;
   } catch (error) {
     console.warn(`Email notification failed: ${error.message}`);
+
     return false;
   }
 };
@@ -199,16 +191,19 @@ Reply directly to this email to respond to ${name}.
  */
 export const sendPasswordResetEmail = async ({ email, resetUrl }) => {
   if (!isMailConfigured()) {
-    console.warn("Password reset email skipped: SMTP is not configured.");
+    console.warn("Password reset email skipped: Resend is not configured.");
+
     return false;
   }
 
   try {
-    const transporter = await createTransporter();
+    const sender = getSenderAddress();
 
-    await transporter.sendMail({
-      from: `"Rohit Kumar | Admin Security" <${process.env.SMTP_USER}>`,
+    const result = await sendEmail({
+      from: sender,
+
       to: email,
+
       subject: "Reset Your Admin Password",
 
       text: `
@@ -264,11 +259,12 @@ If you did not request this reset, you can safely ignore this email.
       `,
     });
 
-    console.log(`✅ Password reset email sent to ${email}`);
+    console.log(`✅ Resend password reset email sent. Email ID: ${result.id}`);
 
     return true;
   } catch (error) {
     console.warn(`Password reset email failed: ${error.message}`);
+
     return false;
   }
 };
